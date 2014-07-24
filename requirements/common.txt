@@ -1,0 +1,8 @@
+# These are apps from django-toolbelt.
+Django
+django-toolbelt
+
+# Crucial apps requirements
+South
+Pillow
+Fabric

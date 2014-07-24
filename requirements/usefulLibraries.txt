@@ -1,0 +1,5 @@
+mechanize
+beautifulsoup4
+Flask
+scrapy # contains lxml
+Whoosh
