@@ -33,6 +33,9 @@ I am only interested in documents with the type of 'votering'.
 
 intressent_id is the foreign key relationship between several tables. 
 
+Check whether a person has been an MP. 
+PersonCommitment -> role_code == Riksdagsledamot && tom == 2014-09-29
+
 ### person
 hangar_guid
 intressent_id
