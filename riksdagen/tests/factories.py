@@ -35,6 +35,11 @@ class PersonCommitmentFactory(factory.django.DjangoModelFactory):
     fk_personcommitment_person = factory.SubFactory(PersonFactory)
 
 
+class PersonWithCommitment(PersonFactory):
+
+    commitments = factory.RelatedFactory(PersonCommitmentFactory, 'fk_personcommitment_person')
+
+
 class PersonalRecordFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = PersonalRecord

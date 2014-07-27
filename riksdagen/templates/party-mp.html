@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for mp in mps %}
+        <p>{{ mp.firstname }}, {{ mp.lastname }} ({{ mp.party }})</p>
+    {% endfor %}
+{% endblock content %}
