@@ -17,9 +17,12 @@ ALLOWED_HOSTS = ['*']
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
+NOSE_ARGS = ['--nologcapture']
+
 THIRD_PARTY = (
     'debug_toolbar',
     'django_nose',
+    'livereload'
     #'debug_toolbar.apps.DebugToolbarConfig', this one is for Django 1.7
 )
 
