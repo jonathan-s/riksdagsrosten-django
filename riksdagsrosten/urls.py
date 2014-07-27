@@ -1,11 +1,12 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from riksdagen.views import party
+from riksdagen.views import party, partywithname
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^parti/(?P<partyname>\w+)/$', partywithname, name='partywithname'),
     # Examples:
     # url(r'^$', 'riksdagsrosten.views.home', name='home'),
     # url(r'^riksdagsrosten/', include('riksdagsrosten.foo.urls')),

@@ -35,3 +35,5 @@ Package.json contains all the dependencies for running livereload. Follow the in
 1. Change to the project's root directory
 2. Install project dependencies with `npm install`
 3. Run Grunt with grunt
+
+When starting the server you have to set the live-reload port the following way: `python manage.py runserver --livereload-port 22220`
