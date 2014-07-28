@@ -4,25 +4,7 @@ from datetime import date
 
 from django.db import models
 
-
-"""
-MAPPING
-Person -> Person
-
-intressent_id -> intressent_id
-född_år -> born_year
-kön -> sex
-efternamn -> lastname
-tilltalsnamn -> firstname
-sorteringsnamn -> sort_name
-iort -> iort
-parti -> party
-valkrets -> constituency
-status -> status
-
-Missing picture urls in person.sql
-"""
-
+"""All the mappings can be found in rename.py in data"""
 
 class Person(models.Model):
     intressent_id = models.CharField(max_length=128, primary_key=True)
@@ -39,6 +21,7 @@ class Person(models.Model):
     def __str__(self):
         return "{0} {1} ({2})".format(self.firstname, self.lastname, self.party)
 
+<<<<<<< HEAD
 """
 MAPPING
 personuppdrag -> PersonCommitment
@@ -54,6 +37,8 @@ uppgift -> task
 intressent_id -> FK_personcommitment_person
 
 """
+=======
+>>>>>>> 4b01168... Removed spec from models and added voting model + small todo in views
 
 class PersonCommitment(models.Model):
     organ_kod = models.CharField(max_length=10)
@@ -68,16 +53,6 @@ class PersonCommitment(models.Model):
     def __str__(self):
         return "{0} för {1}".format(self.role_code, self.task)
 
-"""
-MAPPING
-personuppgift -> PersonalRecord
-
-uppgift_kod -> record_name
-uppgift -> record
-uppgift_typ -> record_type
-intressent_id -> FK_personalrecord_person
-
-"""
 
 class PersonalRecord(models.Model):
     record_name = models.CharField(max_length=60)
@@ -87,6 +62,31 @@ class PersonalRecord(models.Model):
 
     def __str__(self):
         return "{0}: {1}".format(self.record_name, self.record)
+
+class Voting(models.Model):
+    voting_id = models.CharField(max_length=255, primary_key=True)
+    party_year = models.CharField(max_length=100)
+    label = models.CharField(max_length=100)
+    doc_item = models.IntegerField()
+    fk_voting_person = models.ForeignKey(Person, related_name='votes')
+    vote = models.CharField(max_length=255)
+    pertaining = models.CharField(max_length=255)
+    desk_nr = models.CharField(max_length=255)
+    date = models.DateField()
+    hangar_id = models.IntegerField() # a many to many field ?
+    # fields below not used, but included for completness
+    # and because it makes it easy to import data.
+    namn = models.CharField(max_length=255)
+    parti = models.CharField(max_length=255)
+    valkrets = models.CharField(max_length=255)
+    valkretsnummer = models.CharField(max_length=255)
+    iort = models.CharField(max_length=255)
+    fornamn = models.CharField(max_length=255)
+    efternamn = models.CharField(max_length=255)
+    kon = models.CharField(max_length=255)
+    fodd = models.CharField(max_length=255)
+
+
 
 
 

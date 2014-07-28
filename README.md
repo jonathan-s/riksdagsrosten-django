@@ -1,18 +1,16 @@
-Django Project template
+# Riksdagsrösten
 =======================
 
-A django project template with my preferences
+To start developing on riksdagsrösten you can follow the instructions below. 
 
 Installation
 ------------
 
-To use the project template when starting a Django project you only need to type: 
-
-    django-admin.py startproject --template=https://github.com/jonathan-s/Django-Project-template/archive/master.zip project_name
+    git clone git address here. 
 
 After you've installed the project template start a virtual environment where you have pip installed and run:
     
-    sudo sh env.sh 
+    sudo sh env.py
 
 That script will install all the requirements for this project template. It will also set the environment variable so that you will be working with the local settings and no other settings as well as set the secret key environment variable. 
 
@@ -23,7 +21,7 @@ Todo
 - Possibly setting up postgres automatically
 - 
 
-Developing with Livereload
+## Developing with Livereload
 --------------------------
 
 You need to have nodeJS installed and `grunt-cli`. 
@@ -37,3 +35,10 @@ Package.json contains all the dependencies for running livereload. Follow the in
 3. Run Grunt with grunt
 
 When starting the server you have to set the live-reload port the following way: `python manage.py runserver --livereload-port 22220`
+
+## Features to be added
+-----------------------
+If you would like other features, please start a discussion on github issues and we'll see what we can do. 
+
+* See how your facebook friends voted. 
+* A feed for the latest votes by your friends.

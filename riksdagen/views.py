@@ -7,6 +7,7 @@ from riksdagen.models import Person
 """
 Todo
 * make an orm manager for MPs for 2014.
+* add a dictionary for partywithme
 
 """
 
