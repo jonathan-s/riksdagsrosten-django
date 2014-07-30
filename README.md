@@ -14,6 +14,8 @@ After you've installed the project template start a virtual environment where yo
 
 That script will install all the requirements for this project template. It will also set the environment variable so that you will be working with the local settings and no other settings as well as set the secret key environment variable. 
 
+For the time being ask Jonathan Sundqvist about env.py if you want to play around locally. 
+
 Todo
 -----
 - Fix installing requirements automatically

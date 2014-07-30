@@ -1,13 +1,13 @@
 I am only interested in documents with the type of 'votering'. 
 
- 
+hangar_id is the thing that connects everything. 
 
 
 # Models
 ## The person table. 
     CREATE TABLE person (
     id int,
-    hangar_id int, # what?
+    hangar_id int, # what? hangar
     intressent_id varchar(20),
     kontrollsumma varchar(50),
     född_år smallint,
@@ -37,7 +37,7 @@ Check whether a person has been an MP.
 PersonCommitment -> role_code == Riksdagsledamot && tom == 2014-09-29
 
 ### person
-hangar_guid
+hangar_id is the id for documents. 
 intressent_id
 
 ### personuppdrag
@@ -51,33 +51,91 @@ lista på organ?
 
     CREATE TABLE dokument (
     hangar_id int,
+    Binder samman alla dokumentdelar
+    
     dok_id nvarchar(255),
+    [dok_id](http://data.riksdagen.se/Dokumentation/Sa-funkar-dokument-id/)Består av kod för riksmöte, dokumentserie, dokumentbeteckning
+    
     rm nvarchar(255),
+    riksmöte, ett riksdagsår tex 2010/2011
+    
     beteckning nvarchar(255),
+    Sista delen i dok_id, beteckning på dokument. Bestående av [utskott](http://data.riksdagen.se/sv/koder/?typ=organ&utformat=html) och siffra tex AU10
+    
     doktyp nvarchar(255),
+    Typ av dokument [lista här](http://data.riksdagen.se/Dokumentation/Koder-och-termer/)
+    
     typ nvarchar(255),
+    typ av dokument, se [kodnyckel](http://data.riksdagen.se/sv/koder/?typ=doktyp&utformat=html) tex bet -> betänkande
+    
     subtyp nvarchar(255),
+    subtyp av dokument, se [kodnyckel](http://data.riksdagen.se/sv/koder/?typ=doktyp&utformat=html), tex prop -> proposition
+    
     tempbeteckning nvarchar(255),
+    ?? används när?
+    
     organ nvarchar(255),
+    utskott och organ?, se [kodnyckel](http://data.riksdagen.se/sv/koder/?typ=organ&utformat=html) tex AU -> Arbetsmarknadsutskottet
+    
     mottagare nvarchar(255),
+    ??
+    
     nummer int,
+    ?? 
+    
     slutnummer int,
-    datum datetime,
+    ??
+    
+    datum date,
+    Datum är datum för dokument utan tid. 
+    
     systemdatum datetime,
+    ??
+    
     publicerad datetime,
+    tid när det publiceras på ...
+    
     titel nvarchar(255),
+    titel på dokument
+    
     subtitel nvarchar(255),
+    undertitel på dokument
+    
     status nvarchar(255),
+    ?? 
+    
     htmlformat nvarchar(255),
+    ?? 
+    
     relaterat_id nvarchar(255),
+    ??
+    
     source nvarchar(255),
+    ??
+    
     sourceid nvarchar(255),
+    ??
+    
     dokument_url_text nvarchar(255),
+    länk till data.riksdag.se med dokument i råtext
+    
     dokument_url_html nvarchar(255),
+    länk till data.riksdag.se med dokument i html
+    
     dokumentstatus_url_xml nvarchar(255),
+    länk till data.riksdag.se med dokaktivitet i xml
+    
     utskottsforslag_url_xml nvarchar(255),
+    länk till data.riksdag.se med utskottsforslag i xml
+    
     html ntext
+    dokumentet i xml
     );
+
+## Votering table
+hangar_id -> id for dokument.
+votering > huvud ? what does it pertain. 
+beteckning. 
 
 ### dokument
 rm? riksmöte. 
