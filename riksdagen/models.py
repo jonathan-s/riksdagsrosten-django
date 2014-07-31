@@ -64,16 +64,17 @@ class PersonalRecord(models.Model):
         return "{0}: {1}".format(self.record_name, self.record)
 
 class Voting(models.Model):
-    voting_id = models.CharField(max_length=255, primary_key=True)
+    hangar_id = models.IntegerField() # a many to many field ?
+    voting_id = models.CharField(max_length=255)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
     doc_item = models.IntegerField()
     fk_voting_person = models.ForeignKey(Person, related_name='votes')
     vote = models.CharField(max_length=255)
     pertaining = models.CharField(max_length=255)
+    voting_part = models.CharField(max_length=255)
     desk_nr = models.CharField(max_length=255)
     date = models.DateField()
-    hangar_id = models.IntegerField() # a many to many field ?
     # fields below not used, but included for completness
     # and because it makes it easy to import data.
     namn = models.CharField(max_length=255)
@@ -86,7 +87,8 @@ class Voting(models.Model):
     kon = models.CharField(max_length=255)
     fodd = models.CharField(max_length=255)
 
-
-
+    def __str__(self):
+        return "{0}:{1} Röst: {2}".format(
+            self.party_year, self.label, self.vote)
 
 

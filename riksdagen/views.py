@@ -2,7 +2,7 @@ from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
 
-from riksdagen.models import Person
+from riksdagen.models import Person, Voting
 
 """
 Todo
@@ -13,7 +13,7 @@ Todo
 
 # Create your views here.
 def party(request):
-    pass
+    render(request, 'party.html')
 
 def partywithname(request, partyname):
     # add dictionary so {'Socialdemokraterna': 'S'} etc.
@@ -29,8 +29,15 @@ def singlemp(request, mp_id, nameslug=None):
 
     if nameslug == None or nameslug != correct_slug:
         return redirect('singlemp', mp_id=mp_id, nameslug=correct_slug, permanent=True)
-    else:
-        return render(request, 'mp.html', {'mp': mp})
+
+    vote = Voting.objects.filter(
+        fk_voting_person__intressent_id__iexact=mp_id) #qs
+    absent = vote.filter(vote__iexact='frånvarande').count()
+    total_votes = vote.count()
+    presence = (1 - (absent/total_votes)) * 100 # if something is zero?
+
+
+    return render(request, 'mp.html', {'mp': mp})
 
 def allmp(request):
     mps = Person.objects.filter(commitments__until=date(2014, 9, 29),
