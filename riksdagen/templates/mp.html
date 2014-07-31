@@ -1,1 +1,14 @@
 {% extends "base.html" %}
+
+{% block title %}
+    {{ mp.firstname }} {{ mp.lastname }}
+{% endblock title %}
+
+{% block content %}
+    <div class="mp-wrapper pure-g">
+        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter"><img src="http://data.riksdagen.se/filarkiv/bilder/ledamot/{{ mp.intressent_id }}_192.jpg" alt="{{ mp.firstname }} {{ mp.lastname }}"></div>
+        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">oeu</div>
+        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">ou</div>
+        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">ou</div>
+    </div>
+{% endblock content %}

@@ -97,12 +97,50 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.pure-g .pure-g--gutter > div > * {
+    margin: 0 0.5rem;
+}
 
+body {
+    font-family: courier;
+    width: 100%;
+}
 
+div {
+    display: block;
+    box-sizing: border-box;
+}
 
+.wrapper {
+    letter-spacing: 0;
+}
 
+.header {
+}
 
+a {
+    letter-spacing: 0;
+}
 
+.mp-wrapper {
+    background-color: #eae4d9;
+    border-radius: 1em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    box-sizing: content-box;
+
+}
+
+.column {
+    background-color: white;
+    /*margin-left: 0.5em;*/
+    border-radius: 0.8em;
+    padding: 0.7em;
+
+}
+
+.column > img {
+    border-radius: 0.5em;
+}
 
 
 
