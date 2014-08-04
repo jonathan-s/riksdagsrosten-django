@@ -97,12 +97,9 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.pure-g .pure-g--gutter > div > * {
-    margin: 0 0.5rem;
-}
 
 body {
-    font-family: courier;
+    font-family: Arial;
     width: 100%;
 }
 
@@ -111,38 +108,183 @@ div {
     box-sizing: border-box;
 }
 
+ul, li{
+    list-style: none;
+}
+
+.center {
+
+}
+
 .wrapper {
     letter-spacing: 0;
+    margin: 0 2em;
 }
 
 .header {
+    width: 100%;
 }
 
 a {
     letter-spacing: 0;
 }
 
-.mp-wrapper {
-    background-color: #eae4d9;
-    border-radius: 1em;
-    padding: 0.5em 0.5em 0.5em 0.5em;
-    box-sizing: content-box;
+.header {
+    display: block;
+    margin-top: 2em;
+}
+
+.logo {
+    float:left;
+}
+
+.nav {
+    float: right;
+    margin-top: 2em;
+}
+
+.nav li{
+    display: inline;
+    text-align: left;
+    /*float: right;*/
+}
+
+.nav a {
+    display: inline-block;
+    padding: 0 1em;
+    text-decoration: none;
+    color: #999;
+}
+
+.nav a:hover {
+    color: #555;
+}
+
+.single-row {
+    margin-left: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.smaller-title {
+    font-size: 1.3em;
+}
+
+.mp-section {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
+.mp-wrapper {
+    background-color: #eae4d9;
+    border-radius: 1em;
+    /*padding: 0.5em 0.5em 0.5em 0.5em;*/
+
+
+}
+
+.mp-wrapper ul {
+    margin: 0;
+    margin-left: -2.1em;
+    /*padding-top: 0.3em;
+    padding-bottom: 0.3em;*/
+}
+
+.mp-wrapper ul li:first-child {
+    padding-top: .8em;
+}
+
+.mp-wrapper ul li {
+    /*margin: 0.8em;*/
+    padding: 0.8em;
+    padding-top: 0;
+}
+
+.mp-wrapper ul li a {
+    display: block;
+    background: white;
+    padding: 0.7em;
+    border-radius: 0.5em;
+    text-decoration: none;
+}
+
+.vote-title {
+    padding-left: 0.6em;
+    line-height: 1.8em; /* correction for padding in answer */
+    font-size: 1em;
+    color: #111;
+}
+
+
+.answer {
+    float: right;
+    background-color: #ccc;
+    padding: 0.4em 0.6em;
+    border-radius: 0.5em;
+    text-align: center;
+    font-size: 0.9em;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.5), 0px 1px rgba(255,255,255,0.7);
+    color: #222;
+    min-width: 1.7em;
+}
+
+.yes {
+    background-image: linear-gradient(-180deg, #61C861,#2E872E);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#61C861), to(#2E872E));
+}
+
+.no {
+    /*color: #7D1500;*/
+    background-image: -moz-linear-gradient(-90deg,#FF5C5C,#B93C3C);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FF5C5C), to(#B93C3C));
+}
+
+.absent {
+    background-image: -moz-linear-gradient(-90deg,#e1e1e1,#999);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#999));
+}
+
+
 .column {
     background-color: white;
-    /*margin-left: 0.5em;*/
     border-radius: 0.8em;
-    padding: 0.7em;
+    text-align: center;
+    padding: .5em;
+    /*max-width: about 922px;*/
+    margin: 0.7em 0.7em 0.7em 0em;
+    height: 17.2em;
+}
 
+.column-first {
+    margin-left: 0.7em;
 }
 
 .column > img {
     border-radius: 0.5em;
+    max-width: 100%;
 }
 
+.box-title {
+    margin-top: 0;
+    text-align: center;
+    font-family: 'Open Sans', serif;
+}
 
+.inactive {
+    color: gray;
+}
+
+.percentage {
+    text-align: center;
+    font-size: 5.5vmax;
+    margin: 0;
+}
+
+.description {
+    display: block;
+    font-size: 1em;
+}
 
 
 

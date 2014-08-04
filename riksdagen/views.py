@@ -34,10 +34,12 @@ def singlemp(request, mp_id, nameslug=None):
         fk_voting_person__intressent_id__iexact=mp_id) #qs
     absent = vote.filter(vote__iexact='frånvarande').count()
     total_votes = vote.count()
-    presence = (1 - (absent/total_votes)) * 100 # if something is zero?
+    presence = round((1 - (absent/total_votes)) * 100, 1) # if something is zero?
 
 
-    return render(request, 'mp.html', {'mp': mp})
+    return render(request, 'mp.html',
+        {'mp': mp, 'absent': absent, 'total_votes': total_votes,
+        'presence': presence})
 
 def allmp(request):
     mps = Person.objects.filter(commitments__until=date(2014, 9, 29),

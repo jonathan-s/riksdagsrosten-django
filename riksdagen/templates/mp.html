@@ -5,10 +5,44 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="mp-wrapper pure-g">
-        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter"><img src="http://data.riksdagen.se/filarkiv/bilder/ledamot/{{ mp.intressent_id }}_192.jpg" alt="{{ mp.firstname }} {{ mp.lastname }}"></div>
-        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">oeu</div>
-        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">ou</div>
-        <div class="column pure-u-1 pure-u-md-1-4 pure-g--gutter">ou</div>
-    </div>
+    <section>
+        <div class="mp-section">
+            <h1 class="single-row">{{ mp.firstname }} {{ mp.lastname }} ({{ mp.party }})</h1>
+            <div class="mp-wrapper pure-g center">
+                <div class="pure-u-1 pure-u-md-1-4">
+                    <div class="column column-first">
+                        <img src="http://data.riksdagen.se/filarkiv/bilder/ledamot/{{ mp.intressent_id }}_192.jpg" alt="{{ mp.firstname }} {{ mp.lastname }}">
+                    </div></div>
+                <div class="pure-u-1 pure-u-md-1-4 inactive">
+                    <div class="column">
+                        <h2 class="box-title">Likhet</h2>
+                        <h3 class="percentage">?</h3>
+                    </div></div>
+                <div class="pure-u-1 pure-u-md-1-4">
+                    <div class="column">
+                        <h2 class="box-title">Partilojalitet</h2>
+                        <h3 class="percentage">0%</h3>
+                        <span class="description">{{ mp.firstname }} har frångått partilinjen vid 0 av {{ total_votes }} omröstningar sedan förra valet.</span>
+                    </div></div>
+                <div class="pure-u-1 pure-u-md-1-4">
+                    <div class="column">
+                        <h2 class="box-title">Närvaro</h2>
+                        <h3 class="percentage">{{ presence }}%</h3>
+                        <span class="description">{{ mp.firstname }} {{ mp.lastname }} har varit frånvarande vid {{ absent }} av {{ total_votes }} omröstningar sedan förra valet.</span>
+                    </div></div>
+            </div>
+        </div></section>
+    <section>
+        <h1 class="smaller-title single-row">Senaste rösterna</h1>
+        <div class="mp-wrapper">
+            <ul>
+                <li>
+                    <a href="#"><span class="vote-title">Ökad säkerhet</span><span class="answer yes">Ja</span></a>
+                </li>
+                <li><a href="#"><span class="vote-title">Samverkan i kommuner</span> <span class="answer no">Nej</span></a></li>
+                <li><a href="#"><span class="vote-title">Specialist i allmänmedicin</span> <span class="answer absent">Frånvarande</span></a></li>
+            </ul>
+        </div>
+    </section>
+
 {% endblock content %}
