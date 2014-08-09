@@ -2,7 +2,10 @@
 
 from datetime import date
 
+from django.db.models.signals import pre_save
 from django.db import models
+from django.dispatch import receiver
+
 
 """All the mappings can be found in rename.py in data"""
 
@@ -129,6 +132,21 @@ class Document(models.Model):
         return "{0}:{1} :{2}".format(
             self.party_year, self.label, self.title)
 
+def votes(value_list, hgid):
+    tuples = tuple([Voting.objects.filter(
+        hangar_id__exact=hgid, vote__exact='{0}'.format(v), doc_item__exact=1,
+        pertaining__exact='sakfrågan').count() for v in value_list])
+    return tuples
+
+@receiver(pre_save, sender=Document)
+def update_votes(sender, instance, raw, using, update_fields, **kwargs):
+    hgid = instance.hangar_id
+    yes, no, absent, abstained = votes(
+        ['Ja', 'Nej', 'Frånvarande', 'Avstår'], hgid)
+    instance.q1_yes = yes
+    instance.q1_no = no
+    instance.q1_absent = absent
+    instance.q1_abstained = abstained
 
 
 
