@@ -91,4 +91,48 @@ class Voting(models.Model):
         return "{0}:{1} Röst: {2}".format(
             self.party_year, self.label, self.vote)
 
+class Document(models.Model):
+    # doc_id should be primary key
+    doc_id = models.CharField(max_length=100, db_index=True)
+    hangar_id = models.IntegerField(db_index=True)
+    party_year = models.CharField(max_length=30)
+    label = models.CharField(max_length=100)
+    doctype = models.CharField(max_length=100)
+    doctype2 = models.CharField(max_length=100)
+    subtype = models.CharField(max_length=100)
+    templabel = models.CharField(max_length=100)
+    govorgan = models.CharField(max_length=100)
+    receiver = models.CharField(max_length=100)
+    serial_num = models.IntegerField()
+    serial_num_end = models.IntegerField()
+    date = models.DateField()
+    system_date = models.DateTimeField()
+    publicised = models.DateTimeField()
+    title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255)
+    q1_yes = models.IntegerField()
+    q1_no = models.IntegerField()
+    q1_absent = models.IntegerField()
+    q1_abstained = models.IntegerField()
+    status = models.CharField(max_length=255)
+    related_id = models.CharField(max_length=255)
+    source = models.CharField(max_length=255)
+    sourceid = models.CharField(max_length=255)
+    htmlformat = models.CharField(max_length=255)
+    document_url_text = models.CharField(max_length=255)
+    document_url_html = models.CharField(max_length=255)
+    documentstatus_url_xml = models.CharField(max_length=255)
+    committee_prop_url_xml = models.CharField(max_length=255)
+    html = models.TextField()
+
+    def __str__(self):
+        return "{0}:{1} :{2}".format(
+            self.party_year, self.label, self.title)
+
+
+
+
+
+
+
 
