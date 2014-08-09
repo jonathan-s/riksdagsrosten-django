@@ -68,14 +68,14 @@ class Voting(models.Model):
     voting_id = models.CharField(max_length=255)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
-    doc_item = models.IntegerField()
+    doc_item = models.IntegerField(db_index=True)
     fk_voting_person = models.ForeignKey(Person, related_name='votes')
-    vote = models.CharField(max_length=255)
+    vote = models.CharField(max_length=255, db_index=True)
     pertaining = models.CharField(max_length=255)
     voting_part = models.CharField(max_length=255)
     desk_nr = models.CharField(max_length=255)
     date = models.DateField()
-    # fields below not used, but included for completness
+    # fields below not used, but included for completeness
     # and because it makes it easy to import data.
     namn = models.CharField(max_length=255)
     parti = models.CharField(max_length=255)
