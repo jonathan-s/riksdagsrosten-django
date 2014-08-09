@@ -36,11 +36,9 @@
         <h1 class="smaller-title single-row">Senaste rösterna</h1>
         <div class="mp-wrapper">
             <ul>
-                <li>
-                    <a href="#"><span class="vote-title">Ökad säkerhet</span><span class="answer yes">Ja</span></a>
-                </li>
-                <li><a href="#"><span class="vote-title">Samverkan i kommuner</span> <span class="answer no">Nej</span></a></li>
-                <li><a href="#"><span class="vote-title">Specialist i allmänmedicin</span> <span class="answer absent">Frånvarande</span></a></li>
+                {% for d in documents %}
+                    <li><a href="{{ d.doc_id }}"><span class="vote-title">{{ d.title }} {{ d.person　}}</span><span class="answer {{ d.vote|lower}}">{{ d.vote }}</span></a></li>
+                {% endfor %}
             </ul>
         </div>
     </section>
