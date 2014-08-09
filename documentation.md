@@ -54,7 +54,7 @@ lista på organ?
     Binder samman alla dokumentdelar
     
     dok_id nvarchar(255),
-    [dok_id](http://data.riksdagen.se/Dokumentation/Sa-funkar-dokument-id/)Består av kod för riksmöte, dokumentserie, dokumentbeteckning
+    [dok_id](http://data.riksdagen.se/Dokumentation/Sa-funkar-dokument-id/)Består av kod för riksmöte, [dokumentserie](http://data.riksdagen.se/sv/koder/?typ=doktyp&utformat=html), dokumentbeteckning
     
     rm nvarchar(255),
     riksmöte, ett riksdagsår tex 2010/2011
@@ -72,28 +72,28 @@ lista på organ?
     subtyp av dokument, se [kodnyckel](http://data.riksdagen.se/sv/koder/?typ=doktyp&utformat=html), tex prop -> proposition
     
     tempbeteckning nvarchar(255),
-    ?? används när?
+    Temporära beteckningar, tex när partierna har egna beteckningar på motioner.
     
     organ nvarchar(255),
     utskott och organ?, se [kodnyckel](http://data.riksdagen.se/sv/koder/?typ=organ&utformat=html) tex AU -> Arbetsmarknadsutskottet
     
     mottagare nvarchar(255),
-    ??
+    Fältet används väldigt sparsamt och kan på sikt komma att ersättas av "dokreferens". Används idag för skriftliga frågor, interpellationer och KOM-dokument.     
     
     nummer int,
-    ?? 
+    löpnummer i en dokumentserie. 
     
     slutnummer int,
-    ??
+    om dokumentet är en serier så anger slutnummer det sista löpnumret. 
     
     datum date,
     Datum är datum för dokument utan tid. 
     
     systemdatum datetime,
-    ??
+    När dokumentet på något sätt har ändrats.  
     
     publicerad datetime,
-    tid när det publiceras på ...
+    När dokumentet första gången publicerades. Används tex i RSS-flöden. 
     
     titel nvarchar(255),
     titel på dokument
@@ -102,19 +102,19 @@ lista på organ?
     undertitel på dokument
     
     status nvarchar(255),
-    ?? 
+    Fältet är mest ett tekniskt fält / arbetsflöde. Har olika användning beroende på dokument. Används inkonsekvent. 
     
     htmlformat nvarchar(255),
-    ?? 
+    Fältet kan innehålla uppgift om vilken typ av text-format som är lagrat. Vi styr i vissa fall utformatet baserat på det. Långsiktigt så ska man inte behöva ta hänsyn till fältet.
     
     relaterat_id nvarchar(255),
-    ??
+    Visar om dokumentet hör till ett annat huvuddokument. T.ex. bilagor till ett dokument 
     
     source nvarchar(255),
-    ??
+    Fältet borde kanske heta "källa/kalla" och visar bara på vilket system/teknik som vi använt för att ta emot dokument. Borde inte vara intressant för externa användare. 
     
     sourceid nvarchar(255),
-    ??
+    se ovan. 
     
     dokument_url_text nvarchar(255),
     länk till data.riksdag.se med dokument i råtext
