@@ -1,0 +1,23 @@
+GOVORGAN = {
+    'AU': 'Arbetsmarknadsutskottet',
+    'CU': 'Civilutskottet',
+    'FiU': 'Finansutskottet',
+    'FöU': 'Försvarsutskottet',
+    'JuU': 'Justitieutskottet',
+    'KrU': 'Kulturutskottet',
+    'KU': 'Konstitutionsutskottet',
+    'MjU': 'Miljö- och jordbruksutskottet',
+    'NU': 'Näringsutskottet',
+    'SfU': 'Socialförsäkringsutskottet',
+    'SkU': 'Skatteutskottet',
+    'TU': 'Trafikutskottet',
+    'UbU': 'Utbildningsutskottet',
+    'UU': 'Utrikesutskottet',
+    'JuSoU': 'Sammansatta justitie- och socialutskottet',
+    'KUU': 'Sammansatta konstitutions- och Utrikesutskottet',
+    'UMJU': 'Sammansatta utrikes- och miljö- och jordbruksutskottet',
+    'USoU': 'Sammansatta utrikes- och socialutskottet',
+    'BoU': 'Bostadsutskottet',
+    'JoU': 'Jordbruksutskottet',
+    'LU': 'Lagutskottet'
+}
