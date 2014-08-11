@@ -140,7 +140,9 @@ THIRD_PARTY = (
     'south',
     )
 
-LOCAL_APPS = ()
+LOCAL_APPS = (
+    'riksdagen',
+    )
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY + DJANGO_APPS
 
