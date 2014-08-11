@@ -209,6 +209,25 @@ a {
     text-decoration: none;
 }
 
+.column {
+    background-color: white;
+    border-radius: 0.8em;
+    text-align: center;
+    padding: .5em;
+    /*max-width: about 922px;*/
+    margin: 0.7em 0.7em 0.7em 0em;
+    height: 17.2em;
+}
+
+.column-first {
+    margin-left: 0.7em;
+}
+
+.column > img {
+    border-radius: 0.5em;
+    max-width: 100%;
+}
+
 .vote-title {
     padding-left: 0.6em;
     line-height: 1.8em; /* correction for padding in answer */
@@ -245,25 +264,6 @@ a {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#999));
 }
 
-
-.column {
-    background-color: white;
-    border-radius: 0.8em;
-    text-align: center;
-    padding: .5em;
-    /*max-width: about 922px;*/
-    margin: 0.7em 0.7em 0.7em 0em;
-    height: 17.2em;
-}
-
-.column-first {
-    margin-left: 0.7em;
-}
-
-.column > img {
-    border-radius: 0.5em;
-    max-width: 100%;
-}
 
 .box-title {
     margin: 0;
