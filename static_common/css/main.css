@@ -186,7 +186,7 @@ a {
 
 .mp-wrapper ul {
     margin: 0;
-    margin-left: -2.1em;
+    padding-left: 0;
     /*padding-top: 0.3em;
     padding-bottom: 0.3em;*/
 }
