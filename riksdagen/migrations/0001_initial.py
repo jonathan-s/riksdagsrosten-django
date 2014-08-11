@@ -32,13 +32,8 @@ class Migration(SchemaMigration):
             ('status', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('from_date', self.gf('django.db.models.fields.DateField')()),
             ('until', self.gf('django.db.models.fields.DateField')()),
-<<<<<<< HEAD
-            ('task', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('commitment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['riksdagen.Person'], related_name='commitments')),
-=======
             ('task', self.gf('django.db.models.fields.CharField')(max_length=400)),
             ('fk_personcommitment_person', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['riksdagen.Person'], related_name='commitments')),
->>>>>>> 120fb02... Migrations
         ))
         db.send_create_signal('riksdagen', ['PersonCommitment'])
 
@@ -48,11 +43,7 @@ class Migration(SchemaMigration):
             ('record_name', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('record', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('record_type', self.gf('django.db.models.fields.CharField')(max_length=60)),
-<<<<<<< HEAD
-            ('f_record', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['riksdagen.Person'], related_name='records')),
-=======
             ('fk_personalrecord_person', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['riksdagen.Person'], related_name='records')),
->>>>>>> 120fb02... Migrations
         ))
         db.send_create_signal('riksdagen', ['PersonalRecord'])
 
@@ -113,11 +104,7 @@ class Migration(SchemaMigration):
         },
         'riksdagen.personalrecord': {
             'Meta': {'object_name': 'PersonalRecord'},
-<<<<<<< HEAD
-            'f_record': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['riksdagen.Person']", 'related_name': "'records'"}),
-=======
             'fk_personalrecord_person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['riksdagen.Person']", 'related_name': "'records'"}),
->>>>>>> 120fb02... Migrations
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'record': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'record_name': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
@@ -125,23 +112,15 @@ class Migration(SchemaMigration):
         },
         'riksdagen.personcommitment': {
             'Meta': {'object_name': 'PersonCommitment'},
-<<<<<<< HEAD
-            'commitment': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['riksdagen.Person']", 'related_name': "'commitments'"}),
-=======
             'fk_personcommitment_person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['riksdagen.Person']", 'related_name': "'commitments'"}),
->>>>>>> 120fb02... Migrations
             'from_date': ('django.db.models.fields.DateField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'organ_kod': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'role_code': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
             'seq_nr': ('django.db.models.fields.IntegerField', [], {}),
             'status': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-<<<<<<< HEAD
-            'task': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-=======
             'task': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
             'type_of': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
->>>>>>> 120fb02... Migrations
             'until': ('django.db.models.fields.DateField', [], {})
         },
         'riksdagen.voting': {
