@@ -49,7 +49,9 @@ class PersonalRecord(models.Model):
         return "{0}: {1}".format(self.record_name, self.record)
 
 class Voting(models.Model):
-    hangar_id = models.IntegerField() # a many to many field ?
+    document = models.ForeignKey(
+        'Document', to_field='hangar_id', db_column='hangar_id')
+    hangar_id = models.IntegerField(db_index=True) # a many to many field ?
     voting_id = models.CharField(max_length=255)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
