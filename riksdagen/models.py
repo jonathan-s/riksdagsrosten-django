@@ -17,41 +17,23 @@ class Person(models.Model):
     firstname = models.CharField(max_length=60)
     sort_name = models.CharField(max_length=60)
     iort = models.CharField(max_length=60)
-    party = models.CharField(max_length=3)
+    party = models.CharField(max_length=30)
     constituency = models.CharField(max_length=60)
     status = models.CharField(max_length=60)
 
     def __str__(self):
         return "{0} {1} ({2})".format(self.firstname, self.lastname, self.party)
 
-<<<<<<< HEAD
-"""
-MAPPING
-personuppdrag -> PersonCommitment
-
-organ_kod -> organ_kod
-roll_kod -> role_code
-ordningsnummer -> seq_nr
-status -> status
-typ -> type
-from -> from_date
-tom -> until
-uppgift -> task
-intressent_id -> FK_personcommitment_person
-
-"""
-=======
->>>>>>> 4b01168... Removed spec from models and added voting model + small todo in views
-
 class PersonCommitment(models.Model):
-    organ_kod = models.CharField(max_length=10)
-    role_code = models.CharField(max_length=30)
+    organ_kod = models.CharField(max_length=50)
+    role_code = models.CharField(max_length=60)
     seq_nr = models.IntegerField()
     status = models.CharField(max_length=60)
+    type_of = models.CharField(max_length=60)
     from_date = models.DateField()
     until = models.DateField()
-    task = models.CharField(max_length=60)
-    FK_personcommitment_person = models.ForeignKey(Person, related_name='commitments')
+    task = models.CharField(max_length=400)
+    fk_personcommitment_person = models.ForeignKey(Person, related_name='commitments')
 
     def __str__(self):
         return "{0} för {1}".format(self.role_code, self.task)
@@ -59,9 +41,9 @@ class PersonCommitment(models.Model):
 
 class PersonalRecord(models.Model):
     record_name = models.CharField(max_length=60)
-    record = models.CharField(max_length=60)
+    record = models.CharField(max_length=200)
     record_type = models.CharField(max_length=60)
-    FK_personalrecord_person = models.ForeignKey(Person, related_name='records')
+    fk_personalrecord_person = models.ForeignKey(Person, related_name='records')
 
     def __str__(self):
         return "{0}: {1}".format(self.record_name, self.record)
@@ -97,7 +79,7 @@ class Voting(models.Model):
 class Document(models.Model):
     # doc_id should be primary key
     doc_id = models.CharField(max_length=100, db_index=True)
-    hangar_id = models.IntegerField(db_index=True)
+    hangar_id = models.IntegerField(unique=True, db_index=True)
     party_year = models.CharField(max_length=30)
     label = models.CharField(max_length=100)
     doctype = models.CharField(max_length=100)
