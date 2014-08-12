@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from riksdagen.views import party, partywithname, singlemp, allmp
+from riksdagen.views import document_votes, polls
 
 admin.autodiscover()
 
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^ledamot/(?P<mp_id>\d+)/(?P<nameslug>[-\w]+)/$', singlemp, name='singlemp'),
     url(r'^ledamot/(?P<mp_id>\d+)/$', singlemp, name='mpredirect'),
     url(r'^ledamot/$', allmp, name='allmp'),
+    url(r'^votering/$', polls, name='polls'),
     # Examples:
     # url(r'^$', 'riksdagsrosten.views.home', name='home'),
     # url(r'^riksdagsrosten/', include('riksdagsrosten.foo.urls')),
