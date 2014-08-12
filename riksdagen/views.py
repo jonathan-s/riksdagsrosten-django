@@ -12,7 +12,12 @@ Todo
 
 """
 
-# Create your views here.
+def polls(request):
+
+    d = Voting.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').distinct('hangar_id')[:20]
+
+    return render(request, 'polls.html', {'documents': d, 'govorgan': GOVORGAN })
+
 def party(request):
     render(request, 'party.html')
 
