@@ -10,6 +10,7 @@ GOVORGAN = {
     'NU': 'Näringsutskottet',
     'SfU': 'Socialförsäkringsutskottet',
     'SkU': 'Skatteutskottet',
+    'SoU': 'Socialutskottet',
     'TU': 'Trafikutskottet',
     'UbU': 'Utbildningsutskottet',
     'UU': 'Utrikesutskottet',
@@ -17,6 +18,7 @@ GOVORGAN = {
     'KUU': 'Sammansatta konstitutions- och Utrikesutskottet',
     'UMJU': 'Sammansatta utrikes- och miljö- och jordbruksutskottet',
     'USoU': 'Sammansatta utrikes- och socialutskottet',
+    'UFöU': 'Sammansatta utrikes- och försvarsutskottet',
     'BoU': 'Bostadsutskottet',
     'JoU': 'Jordbruksutskottet',
     'LU': 'Lagutskottet'
