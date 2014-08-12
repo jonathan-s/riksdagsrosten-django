@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load custom_filter %}
 
 {% block content %}
     <div class="mp-wrapper vote-list">
@@ -13,7 +14,7 @@
                                 <p>Description</p>
                                 <div class="meta">
                                     <span>Voteringsdag: {{ d.date }}</span><br>
-                                    <span>Kategori: {{ d.document.govorgan }}</span><br>
+                                    <span>Kategori: {{ govorgan|get_key:d.document.govorgan }}</span><br>
                                     Hangar id: {{ d.document.hangar_id }}<br>
                                     Voting id: {{ d.voting_id }}
                                 </div>
