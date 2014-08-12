@@ -242,6 +242,66 @@ a {
     color: #111;
 }
 
+.vote-list > a, p, span {
+    color: black;
+}
+
+.vote-list ul li a {
+    padding: 1em;
+}
+
+.vote-list .smaller-title {
+    font-size: 1.1em;
+}
+
+.votes {
+    border-radius: 2em;
+    height: 2em;
+    background-color: orange;
+    overflow: hidden;
+    border: 1px solid #999; /* fix for tiny space in between */
+    box-shadow: 0 0 5px #888;
+}
+
+.votes span {
+    line-height: 2em;
+    padding: 0em 0.6em;
+    text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
+}
+
+.votes .no-bar span {
+    float: right;
+    white-space: nowrap;
+}
+
+.vote-list .vote-here {
+    display: block;
+    text-align: center;
+    background-color: #EAE4D9;
+    margin: 0 2em 1em 2em;
+    padding: 0.5em;
+    border-radius: 0.8em;
+    box-shadow: 0px 1px 3px #999;
+}
+
+.vote-list .yes-bar {
+    background-color: green;
+    height: 2em;
+    float: left;
+    background-image: -webkit-gradient(
+        linear, left top, left bottom, from(#61C861), to(#2E872E));
+}
+
+.vote-list .no-bar {
+    background-color: red;
+    height: 2em;
+    float: right;
+    background-image: -webkit-gradient(
+        linear, left top, left bottom, from(#FF5C5C), to(#B93C3C));
+}
+
+
+
 
 .answer {
     float: right;
