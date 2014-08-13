@@ -12,9 +12,17 @@ Todo
 
 """
 
-def polls(request):
+def polls(request, category=None):
+    # do a subquery with distinct through extra. It should work
+    # http://stackoverflow.com/questions/9795660/postgresql-distinct-on-without-ordering
+    d = Voting.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').distinct('hangar_id')
 
-    d = Voting.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').distinct('hangar_id')[:20]
+    if category and GOVORGAN.get(category):
+        d = d.filter(document__govorgan__exact=category)[:20]
+    elif category:
+        return redirect('polls', permanent=True)
+    else:
+        d = d[:20]
 
     return render(request, 'polls.html', {'documents': d, 'govorgan': GOVORGAN })
 
