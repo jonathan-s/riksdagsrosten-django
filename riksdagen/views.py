@@ -1,9 +1,10 @@
 from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 
 from riksdagen.models import Person, Voting, Document
-from riksdagen.constants import GOVORGAN
+from riksdagen.constants import GOVORGAN, PARTY_NAME
 
 """
 Todo
@@ -31,9 +32,12 @@ def party(request):
 
 def partywithname(request, partyname):
     # add dictionary so {'Socialdemokraterna': 'S'} etc.
-    mps = Person.objects.filter(
-            party__iexact=partyname, commitments__until=date(2014, 9, 29),
+    if PARTY_NAME.get(partyname):
+        mps = Person.objects.filter(
+            party__iexact=PARTY_NAME[partyname], commitments__until=date(2014, 9, 29),
             commitments__role_code__iexact='Riksdagsledamot')
+    else:
+        raise Http404
 
     return render(request, 'party-mp.html', {'mps': mps})
 

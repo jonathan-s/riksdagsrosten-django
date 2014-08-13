@@ -23,3 +23,16 @@ GOVORGAN = {
     'JoU': 'Jordbruksutskottet',
     'LU': 'Lagutskottet'
 }
+
+PARTY = {
+    'S': 'socialdemokraterna',
+    'Kd': 'kristdemokraterna',
+    'M': 'moderaterna',
+    'Mp': 'miljöpartiet',
+    'V': 'vänsterpartiet',
+    'SD': 'sverigedemokraterna',
+    'C': 'centerpartiet',
+    'Fp': 'folkpartiet'
+}
+
+PARTY_NAME = { v : k for k, v in PARTY.items() }
