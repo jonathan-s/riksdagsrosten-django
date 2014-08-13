@@ -26,13 +26,13 @@ GOVORGAN = {
 
 PARTY = {
     'S': 'socialdemokraterna',
-    'Kd': 'kristdemokraterna',
+    'KD': 'kristdemokraterna',
     'M': 'moderaterna',
-    'Mp': 'miljöpartiet',
+    'MP': 'miljöpartiet',
     'V': 'vänsterpartiet',
     'SD': 'sverigedemokraterna',
     'C': 'centerpartiet',
-    'Fp': 'folkpartiet'
+    'FP': 'folkpartiet'
 }
 
 PARTY_NAME = { v : k for k, v in PARTY.items() }
