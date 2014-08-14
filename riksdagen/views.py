@@ -28,7 +28,14 @@ def polls(request, category=None):
     return render(request, 'polls.html', {'documents': d, 'govorgan': GOVORGAN })
 
 def party(request):
-    render(request, 'party.html')
+    counts = {}
+    # this is somewhat expensive, find a way to cache this.
+    for party in PARTY_NAME.keys():
+        print(party)
+        counts['{0}'.format(party)] = Person.objects.filter(
+            party__exact=PARTY_NAME[party], commitments__until=date(2014, 9, 29), commitments__role_code__exact='Riksdagsledamot').count()
+
+    return render(request, 'party.html', {'counts': counts, 'party_name': PARTY_NAME })
 
 def partywithname(request, partyname):
     # add dictionary so {'Socialdemokraterna': 'S'} etc.
