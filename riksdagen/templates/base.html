@@ -32,12 +32,12 @@
         <div class="wrapper">
             <header>
                 <div class="header clearfix">
-                    <div class="logo"><img src="{% static 'img/riksdagsrosten-320.png'%}" alt="riksdagsrösten">
+                    <div class="main-logo"><img src="{% static 'img/riksdagsrosten-320.png'%}" alt="riksdagsrösten">
                     </div>
                     <nav>
                         <div class="nav smaller-title">
                             <ul>
-                                <li><a href="">Omröstningar</a></li>
+                                <li><a href="{% url 'polls' %}">Omröstningar</a></li>
                                 <li><a href="{% url 'party' %}">Ledamöter & Partier</a></li>
                                 <li><a href="#">Blogg</a></li>
                                 <li><a href="#">Logga in</a></li>
