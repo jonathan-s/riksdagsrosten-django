@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load custom_filter %}
+
+{% block content %}
+    <div class="mp-wrapper pure-g">
+    {% for party in counts %}
+        <div class="pure-u-1-4 pure-u-md-1-4">
+            <a href="{% url 'partywithname' party %}">
+                <div class="column party">
+                    <h1 class="party-logo {{ party_name|get_key:party }}">
+                        {{ party }}
+                    </h1>
+                    <span class="percentage">
+                        {{ counts|get_key:party }} st
+                    </span>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock content %}
