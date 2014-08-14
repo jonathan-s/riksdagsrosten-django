@@ -14,9 +14,10 @@
                                 <p>Description</p>
                                 <div class="meta">
                                     <span>Voteringsdag: {{ d.date }}</span><br>
+                                    <span>Doc datum: {{ d.document.date }}<br></span>
                                     <span>Kategori: {{ govorgan|get_key:d.document.govorgan }}
                                     </span><br>
-                                    Hangar id: {{ d.document.hangar_id }}<br>
+                                    Hangar id: {{ d.hangar_id }}<br>
                                     Voting id: {{ d.voting_id }}
                                 </div>
                             </div>
