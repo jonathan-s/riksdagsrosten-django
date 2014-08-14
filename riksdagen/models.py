@@ -48,15 +48,12 @@ class PersonalRecord(models.Model):
     def __str__(self):
         return "{0}: {1}".format(self.record_name, self.record)
 
-class Voting(models.Model):
-    document = models.ForeignKey(
-        'Document', to_field='hangar_id', db_column='hangar_id')
+class VotingBase(models.Model):
     hangar_id = models.IntegerField(db_index=True) # a many to many field ?
     voting_id = models.CharField(max_length=255)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
     doc_item = models.IntegerField(db_index=True)
-    fk_voting_person = models.ForeignKey(Person, related_name='votes')
     vote = models.CharField(max_length=255, db_index=True)
     pertaining = models.CharField(max_length=255)
     voting_part = models.CharField(max_length=255)
@@ -73,6 +70,27 @@ class Voting(models.Model):
     efternamn = models.CharField(max_length=255)
     kon = models.CharField(max_length=255)
     fodd = models.CharField(max_length=255)
+
+    class Meta:
+        abstract = True
+
+class Voting(VotingBase):
+    document = models.ForeignKey(
+        'Document', to_field='hangar_id', db_column='hangar_id', related_name='doc_votes')
+    fk_voting_person = models.ForeignKey(Person, related_name='votes')
+
+    def __str__(self):
+        return "{0}:{1} Röst: {2}".format(
+            self.party_year, self.label, self.vote)
+
+class VotingDistinct(VotingBase):
+    document = models.ForeignKey(
+        'Document', to_field='hangar_id', db_column='hangar_id', related_name='ddoc_votes')
+    fk_voting_person = models.ForeignKey(Person, related_name='vd_votes')
+
+    class Meta:
+        db_table = 'riksdagen_voting_distinct'
+        managed = False
 
     def __str__(self):
         return "{0}:{1} Röst: {2}".format(
