@@ -239,9 +239,37 @@ a {
     height: 17.2em;
 }
 
-.column > img {
+.column img {
     border-radius: 0.5em;
     max-width: 100%;
+    max-height: 100%;
+}
+
+.mp-list {
+    height: 5.5em;
+
+}
+
+.mp-list img {
+    vertical-align: middle;
+    text-align: right;
+}
+
+.mp-list p {
+    line-height: 4em;
+    margin: 0;
+    text-align: center;
+    margin-left: -3em;
+    display: inline;
+    font-size: 1.5vw;
+}
+
+.logo-corner {
+    position: relative;
+    top: 1.7em;
+    left: -1.2em;
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .vote-title {
@@ -309,8 +337,50 @@ a {
         linear, left top, left bottom, from(#FF5C5C), to(#B93C3C));
 }
 
+/* Belongs to party view */
 
+.S {
+    background: url('../img/S.png');
+}
 
+.V {
+    background: url('../img/V.png');
+}
+
+.MP {
+    background: url('../img/MP.png');
+}
+
+.SD {
+    background: url('../img/SD.png');
+}
+
+.FP {
+    background: url('../img/FP.png');
+}
+
+.C {
+    background: url('../img/C.png');
+}
+
+.KD {
+    background: url('../img/KD.png')
+}
+
+.M {
+    background: url('../img/M.png');
+}
+
+.party {
+    height: 9em;
+}
+
+.party-logo {
+    margin-top: 0.3em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+}
 
 .answer {
     float: right;
