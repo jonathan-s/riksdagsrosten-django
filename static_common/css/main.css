@@ -195,7 +195,7 @@ a {
 }
 
 .mp-section {
-    max-width: 950px;
+    max-width: 890px;
     margin-left: auto;
     margin-right: auto;
 
@@ -214,17 +214,10 @@ a {
 .mp-wrapper ul {
     margin: 0;
     padding-left: 0;
-    /*padding-top: 0.3em;
-    padding-bottom: 0.3em;*/
-}
-
-.mp-wrapper ul li:first-child {
-    padding-top: .8em;
 }
 
 .mp-wrapper ul li {
-    /*margin: 0.8em;*/
-    padding: 0.8em;
+    padding: 0.8em 0.8em 0.8em 0em;
     padding-top: 0;
 }
 
