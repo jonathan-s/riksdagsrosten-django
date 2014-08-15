@@ -55,7 +55,7 @@ def partywithname(request, partyname):
 
 def singlemp(request, mp_id, nameslug=None):
     mp = get_object_or_404(Person, pk=mp_id)
-    correct_slug = "{0}-{1}".format(mp.firstname, mp.lastname)
+    correct_slug = "{0}-{1}".format(mp.firstname, mp.lastname).replace(' ', '-')
     # make select_related to save queries.
 
     if nameslug == None or nameslug != correct_slug:
@@ -65,7 +65,10 @@ def singlemp(request, mp_id, nameslug=None):
         fk_voting_person__intressent_id__exact=mp_id) #qs
     absent = vote.filter(vote__exact='Frånvarande').count()
     total_votes = vote.count()
-    presence = round((1 - (absent/total_votes)) * 100, 1) # if something is zero?
+    if total_votes != 0:
+        presence = round((1 - (absent/total_votes)) * 100, 1) # if something is zero?
+    else:
+        presence = 0
 
     d = Document.objects.extra(select={'vote': 'riksdagen_voting.vote', 'person': 'riksdagen_voting.namn'},tables=['riksdagen_voting', 'riksdagen_person'],where=['riksdagen_voting.hangar_id=riksdagen_document.hangar_id',"riksdagen_person.intressent_id=riksdagen_voting.fk_voting_person_id", "riksdagen_person.intressent_id='{0}'".format(mp_id),"riksdagen_voting.doc_item=1"]).distinct('doc_id')[:5]
 
