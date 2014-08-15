@@ -44,8 +44,8 @@ def partywithname(request, partyname):
     # add dictionary so {'Socialdemokraterna': 'S'} etc.
     if PARTY_NAME.get(partyname):
         mps = Person.objects.filter(
-            party__iexact=PARTY_NAME[partyname], commitments__until=date(2014, 9, 29),
-            commitments__role_code__iexact='Riksdagsledamot')
+            party__exact=PARTY_NAME[partyname], commitments__until=date(2014, 9, 29),
+            commitments__role_code__exact='Riksdagsledamot')
     else:
         raise Http404
 
