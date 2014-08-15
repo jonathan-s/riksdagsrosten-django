@@ -2,11 +2,12 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from riksdagen.views import party, partywithname, singlemp, allmp
-from riksdagen.views import polls
+from riksdagen.views import polls, home
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', home, name='home'),
     url(r'^parti/$', party, name='party'),
     url(r'^parti/(?P<partyname>\w+)/$', partywithname, name='partywithname'),
     url(r'^ledamot/(?P<mp_id>\d+)/(?P<nameslug>[-\w]+)/$', singlemp, name='singlemp'),
