@@ -13,6 +13,9 @@ Todo
 
 """
 
+def home(request):
+    return render(request, 'home.html')
+
 def polls(request, category=None):
     # do a subquery with distinct through extra. It should work
     # http://stackoverflow.com/questions/9795660/postgresql-distinct-on-without-ordering
