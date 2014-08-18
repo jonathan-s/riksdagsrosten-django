@@ -9,9 +9,13 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Voting.document'
-        db.add_column('riksdagen_voting', 'document',
+        """db.add_column('riksdagen_voting', 'document',
                       self.gf('django.db.models.fields.related.ForeignKey')(db_column='hangar_id', to=orm['riksdagen.Document'], default=0, to_field='hangar_id'),
-                      keep_default=False)
+                      keep_default=False)"""
+
+        db.add_column('riksdagen_personcommitment', 'type_of',
+            self.gf('django.db.models.fields.CharField')(max_length=60, default=''),
+            keep_default=False)
 
         # Adding unique constraint on 'Document', fields ['hangar_id']
         db.create_unique('riksdagen_document', ['hangar_id'])
@@ -22,7 +26,9 @@ class Migration(SchemaMigration):
         db.delete_unique('riksdagen_document', ['hangar_id'])
 
         # Deleting field 'Voting.document'
-        db.delete_column('riksdagen_voting', 'hangar_id')
+        # db.delete_column('riksdagen_voting', 'hangar_id')
+
+        db.delete_column('riksdagen_personcommitment', 'type_of')
 
 
     models = {

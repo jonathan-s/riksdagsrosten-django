@@ -4,8 +4,8 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 
-
 from .factories import PersonFactory, PersonWithCommitment
+from riksdagen.constants import GOVORGAN
 from riksdagen.views import party, partywithname, singlemp
 from riksdagen.views import allmp
 from riksdagen.models import Person
@@ -19,7 +19,7 @@ class PartyTest(TestCase):
     def test_name_here(self):
         pass
 
-class PartyNameTest(TestCase):
+class PartyWithNameTest(TestCase):
 
     def test_partyname_resolves_url_correct(self):
         found = resolve('/parti/M/')
@@ -28,7 +28,7 @@ class PartyNameTest(TestCase):
         self.assertEqual(found.kwargs, {'partyname': 'M'})
 
     def test_partyname_correct_template(self):
-        response = self.client.get('/parti/M/')
+        response = self.client.get('/parti/moderaterna/')
 
         self.assertTemplateUsed(response, 'party-mp.html')
 
@@ -37,7 +37,7 @@ class PartyNameTest(TestCase):
         PersonWithCommitment(party='S', commitments__until=date(2014, 9, 29))
         PersonWithCommitment(party='M', commitments__until=date(2014, 1, 1))
         #Above should not be in list.
-        response = self.client.get('/parti/M/')
+        response = self.client.get('/parti/moderaterna/')
 
         mps = Person.objects.filter(
             party__iexact='M', commitments__until=date(2014, 9, 29),
@@ -46,7 +46,7 @@ class PartyNameTest(TestCase):
         self.assertEqual(list(response.context[-1]['mps']), list(mps))
 
     def test_party_returns_response(self):
-        response = self.client.get('/parti/M/')
+        response = self.client.get('/parti/moderaterna/')
 
         self.assertEqual(response.status_code, 200)
 
