@@ -6,18 +6,11 @@ from django.http import Http404
 from riksdagen.models import Person, Voting, Document, VotingDistinct
 from riksdagen.constants import GOVORGAN, PARTY_NAME, PARTY
 
-"""
-Todo
-* make an orm manager for MPs for 2014.
-* add a dictionary for partywithme
-
-"""
-
 def home(request):
     return render(request, 'home.html')
 
 def polls(request, category=None):
-    # do a subquery with distinct through extra. It should work
+    # do a subquery with distinct through extra. It should work, this is still a rather slow query
     # http://stackoverflow.com/questions/9795660/postgresql-distinct-on-without-ordering
     d = VotingDistinct.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').order_by('-date')
 
@@ -41,7 +34,6 @@ def party(request):
     return render(request, 'party.html', {'counts': counts, 'party_name': PARTY_NAME })
 
 def partywithname(request, partyname):
-    # add dictionary so {'Socialdemokraterna': 'S'} etc.
     if PARTY_NAME.get(partyname):
         mps = Person.objects.filter(
             party__exact=PARTY_NAME[partyname], commitments__until=date(2014, 9, 29),
@@ -66,7 +58,7 @@ def singlemp(request, mp_id, nameslug=None):
     absent = vote.filter(vote__exact='Frånvarande').count()
     total_votes = vote.count()
     if total_votes != 0:
-        presence = round((1 - (absent/total_votes)) * 100, 1) # if something is zero?
+        presence = round((1 - (absent/total_votes)) * 100, 1)
     else:
         presence = 0
 

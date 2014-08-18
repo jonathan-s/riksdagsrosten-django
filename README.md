@@ -16,13 +16,6 @@ That script will install all the requirements for this project template. It will
 
 For the time being ask Jonathan Sundqvist about env.py if you want to play around locally. 
 
-Todo
------
-- Fix installing requirements automatically
-- Fix dev settings
-- Possibly setting up postgres automatically
-- 
-
 ## Developing with Livereload
 --------------------------
 
@@ -41,6 +34,3 @@ When starting the server you have to set the live-reload port the following way:
 ## Features to be added
 -----------------------
 If you would like other features, please start a discussion on github issues and we'll see what we can do. 
-
-* See how your facebook friends voted. 
-* A feed for the latest votes by your friends.

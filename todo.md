@@ -13,7 +13,9 @@
     - Friend graph
     - Personalized homepage when logged in. 
     - A friend feed?
+* Person view
+    - Cache pictures on my server
+    - Orm manager for MPs for 2014
 * A model for aggregation of votes, easier to handle.
 * Look at utskottsforslag and see if it's possible to regex out yrkande and nummer with the document and then parse that. To include a summary. 
-* Get Celery working for processes with redis. 
-* 
+* Get Celery working for processes with redis, for aggregation of votes for instance. 
