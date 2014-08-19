@@ -3,7 +3,7 @@ import datetime
 import factory
 
 from riksdagen.models import Person, PersonCommitment, PersonalRecord
-from riksdagen.models import Voting, Document
+from riksdagen.models import Voting, Document, VotingAgg
 
 class PersonFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -98,10 +98,6 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     publicised = datetime.datetime(2014, 6, 22)
     title = 'Random Junk Title'
     subtitle = ''
-    q1_yes = 0
-    q1_no = 0
-    q1_absent = 0
-    q1_abstained = 0
     status = ''
     related_id = ''
     source = ''
@@ -112,6 +108,24 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     documentstatus_url_xml = 'http://data.riksdagen.se/dokumentstatus/GY01AU4'
     committee_prop_url_xml = 'http://data.riksdagen.se/utskottsforslag/GY01AU4'
     html = 'Again lots of html'
+
+
+class VotingAggFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = VotingAgg
+
+    document = factory.SubFactory(DocumentFactory)
+    hangar_id = factory.Sequence(lambda n: 1000+n)
+    voting_id = 'AAFAC7F5-AFCD-11D8-AE5D-0004755038D1'
+    date = datetime.date(2014, 6, 17)
+    q1_yes = 0
+    q1_no = 0
+    q1_absent = 0
+    q1_abstained = 0
+
+
+
 
 
 
