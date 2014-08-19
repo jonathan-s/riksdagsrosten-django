@@ -56,13 +56,13 @@ class DocumentFactory(factory.django.DjangoModelFactory):
         model = Document
 
     doc_id = 'GY01AU4'
-    hangar_id = 123123
+    hangar_id = factory.Sequence(lambda n: 2000+n)
     party_year = '2013/14'
     label = 'FIU21'
     doctype = 'bet'
     doctype2 = 'bet'
     subtype = 'bet'
-    temblabel = ''
+    templabel = ''
     govorgan = 'FIU'
     receiver = ''
     serial_num = 4
