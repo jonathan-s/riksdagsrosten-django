@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from django.db.models.signals import pre_save
+from django.db.models.signals import post_save
 from django.db import models
 from django.dispatch import receiver
 
@@ -143,24 +143,34 @@ class Document(models.Model):
             self.party_year, self.label, self.title)
 
 def votes(value_list, hgid):
-    tuples = tuple([Voting.objects.filter(
-        hangar_id__exact=hgid, vote__exact='{0}'.format(v), doc_item__exact=1,
-        pertaining__exact='sakfrågan').count() for v in value_list])
-    return tuples
+    """Takes hangar_id, orders by doc_item, takes the first
+        elements doc_item and gets the vote results of that"""
 
-@receiver(pre_save, sender=Document)
-def update_votes(sender, instance, raw, using, update_fields, **kwargs):
+    qs = Voting.objects.filter(hangar_id__exact=hgid,
+        pertaining__exact='sakfrågan').order_by('doc_item')
+    if qs.exists():
+        doc_item = qs[0].doc_item
+        d = {v: qs.filter(vote__exact='{0}'.format(v),
+                doc_item=doc_item).count() for v in value_list}
+        d['voting_id'] = qs[0].voting_id
+        d['date'] = qs[0].date
+    else:
+        d = {}
+    return d
+
+def update_or_create(updated_values, hgid):
+    instance, created = VotingAgg.objects.get_or_create(**updated_values)
+    if created:
+        pass # no need to do anything
+    else:
+        VotingAgg.objects.update(**updated_values)
+
+@receiver(post_save, sender=Document)
+def update_votes(sender, instance, created, raw, using, update_fields, **kwargs):
     hgid = instance.hangar_id
-    yes, no, absent, abstained = votes(
+    d = votes(
         ['Ja', 'Nej', 'Frånvarande', 'Avstår'], hgid)
-    instance.q1_yes = yes
-    instance.q1_no = no
-    instance.q1_absent = absent
-    instance.q1_abstained = abstained
-
-
-
-
-
+    if d.get('voting_id'):
+        update_or_create(d, hgid)
 
 
