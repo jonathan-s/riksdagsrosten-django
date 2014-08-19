@@ -5,19 +5,38 @@ from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 
 from .factories import PersonFactory, PersonWithCommitment
+from .factories import VotingAggFactory, DocumentFactory
 from riksdagen.constants import GOVORGAN
 from riksdagen.views import party, partywithname, singlemp
-from riksdagen.views import allmp
-from riksdagen.models import Person
+from riksdagen.views import allmp, polls
+from riksdagen.models import Person, VotingDistinct, Voting, Document
+
+"""
+import factory
+
+import logging
+logger = logging.getLogger('factory')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)
+"""
+
+class PollsTest(TestCase):
+
+    def setUp(self):
+        # DocumentFactory()
+        self.v = VotingAggFactory.create()
 
 
-class PartyTest(TestCase):
+    def test_polls_resolves_url_correct(self):
+        found = resolve('/votering/tidigare/kategori/')
 
-    def test_party_resolves_url_correct(self):
-        pass
+        d = VotingDistinct.objects.select_related('document').filter(
+            doc_item__exact=1,
+            pertaining__exact='sakfrågan').order_by('-date')
 
-    def test_name_here(self):
-        pass
+        self.assertEqual(found.func, polls)
+        self.assertEqual(found.kwargs, {'documents': d, 'govorgan': GOVORGAN})
+
 
 class PartyWithNameTest(TestCase):
 
