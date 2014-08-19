@@ -159,7 +159,48 @@ a {
 }
 
 .main-logo {
+    font-size: 3em;
     float:left;
+}
+
+.logo {
+    font-family: "Josefin Sans", Comic sans MS;
+    margin:0;
+    margin-top: -0.1em;
+    width: 4.3em;
+    font-size: inherit;
+}
+
+.logo > span {
+  position: relative;
+  top: 1em;
+  left: -4.3em;
+}
+
+.person {
+    font-size: 1.5em;
+    position: relative;
+    top: 0.05em;
+    text-shadow: 0 1px 0.001em #13223f,
+                1px 0 0.001em #13223f,
+                -1px 0 0.001em #13223f,
+                0 -1px 0.001em #13223f;
+
+}
+
+.middle-person {
+    top: 0.3em;
+    left: -1.03em;
+    color: #3763BA;
+}
+
+.left-person {
+    left: 0.3em;
+    color: #374CB7;
+}
+
+.right-person {
+    color: #3838B5;
 }
 
 .nav {

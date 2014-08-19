@@ -18,6 +18,8 @@
 -        <![endif]-->
         <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+        <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <!--<![endif]-->
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -32,8 +34,13 @@
         <div class="wrapper">
             <header>
                 <div class="header clearfix">
-                    <div class="main-logo"><img src="{% static 'img/riksdagsrosten-320.png'%}" alt="riksdagsrösten">
+                    <div class="main-logo">
+                        <h1 class="logo left">RIKSDAGS<span>RÖSTEN</span></h1>
+                        <i class="fa fa-user fa-4x left-person left person"></i>
+                        <i class="fa fa-user fa-4x right-person left person"></i>
+                        <i class="fa fa-user fa-4x grey middle-person left person"></i>
                     </div>
+
                     <nav>
                         <div class="nav smaller-title">
                             <ul>
