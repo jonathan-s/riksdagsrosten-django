@@ -25,11 +25,11 @@
                                 <span class="vote-here">Klicka här för att rösta</span>
                                 <span>Riksdagen</span>
                                 <div class="votes">
-                                    <div class="yes-bar" style="width:{% widthratio d.document.q1_yes d.document.q1_yes|add:d.document.q1_no 100 %}%">
-                                        <span>{{ d.document.q1_yes }} st</span>
+                                    <div class="yes-bar" style="width:{% widthratio d.q1_yes d.q1_yes|add:d.q1_no 100 %}%">
+                                        <span>{{ d.q1_yes }} st</span>
                                     </div>
-                                    <div class="no-bar" style="width:{% widthratio d.document.q1_no d.document.q1_yes|add:d.document.q1_no 100 %}%">
-                                        <span>{{ d.document.q1_no }} st</span>
+                                    <div class="no-bar" style="width:{% widthratio d.q1_no d.q1_yes|add:d.q1_no 100 %}%">
+                                        <span>{{ d.q1_no }} st</span>
                                     </div>
                                 </div>
                             </div>
