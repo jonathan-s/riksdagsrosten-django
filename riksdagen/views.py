@@ -3,8 +3,9 @@ from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 
-from riksdagen.models import Person, Voting, Document, VotingDistinct
+from riksdagen.models import Person, Voting, Document, VotingDistinct, VotingAgg
 from riksdagen.constants import GOVORGAN, PARTY_NAME, PARTY
+
 
 def home(request):
     return render(request, 'home.html')
@@ -12,7 +13,8 @@ def home(request):
 def polls(request, category=None):
     # do a subquery with distinct through extra. It should work, this is still a rather slow query
     # http://stackoverflow.com/questions/9795660/postgresql-distinct-on-without-ordering
-    d = VotingDistinct.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').order_by('-date')
+    """d = VotingDistinct.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').order_by('-date')"""
+    d = VotingAgg.objects.select_related('document').order_by('-date')
 
     if category and GOVORGAN.get(category):
         d = d.filter(govorgan__exact=category)[:20]
