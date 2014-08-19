@@ -20,7 +20,6 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'Document', fields ['hangar_id']
         db.create_unique('riksdagen_document', ['hangar_id'])
 
-
     def backwards(self, orm):
         # Removing unique constraint on 'Document', fields ['hangar_id']
         db.delete_unique('riksdagen_document', ['hangar_id'])
