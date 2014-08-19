@@ -96,6 +96,18 @@ class VotingDistinct(VotingBase):
         return "{0}:{1} Röst: {2}".format(
             self.party_year, self.label, self.vote)
 
+class VotingAgg(models.Model):
+    document = models.ForeignKey(
+        'Document', to_field='hangar_id', db_column='hangar_id', related_name='voting_agg')
+    voting_id = models.CharField(max_length=255)
+    hangar_id = models.IntegerField()
+    date = models.DateField()
+    q1_yes = models.IntegerField()
+    q1_no = models.IntegerField()
+    q1_absent = models.IntegerField()
+    q1_abstained = models.IntegerField()
+
+
 class Document(models.Model):
     # doc_id should be primary key
     doc_id = models.CharField(max_length=100, db_index=True)
@@ -115,10 +127,6 @@ class Document(models.Model):
     publicised = models.DateTimeField()
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255)
-    q1_yes = models.IntegerField()
-    q1_no = models.IntegerField()
-    q1_absent = models.IntegerField()
-    q1_abstained = models.IntegerField()
     status = models.CharField(max_length=255)
     related_id = models.CharField(max_length=255)
     source = models.CharField(max_length=255)
