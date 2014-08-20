@@ -27,6 +27,11 @@ ADMINS = (
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.herokuapp.com']
 
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+    )
+
 MANAGERS = ADMINS
 
 # using dj_database_url.config() check Kenneth reitz Getting started with django for usage
@@ -46,6 +51,13 @@ DJANGO_APPS = (
     # 'django.contrib.admindocs',
     )
 
+THIRD_PARTY = (
+    'south',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    )
 
 LOCAL_APPS = (
     'riksdagen',
@@ -143,6 +155,13 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 SITE_ID = 1
 
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email', 'publish_stream'],
+        'METHOD': 'js_sdk'
+    }
+}
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
