@@ -1,8 +1,8 @@
 # These are apps from django-toolbelt.
 Django
 django-toolbelt
+django-allauth
 
 # Crucial apps requirements
 South
 Pillow
-Fabric

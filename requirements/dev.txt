@@ -2,4 +2,5 @@
 django-debug-toolbar
 django-livereload
 nose
-factorybox
+factory_boy
+django-nose
