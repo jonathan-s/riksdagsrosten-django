@@ -1,3 +1,5 @@
+# enconding: utf-8
+
 GOVORGAN = {
     'AU': 'Arbetsmarknadsutskottet',
     'CU': 'Civilutskottet',

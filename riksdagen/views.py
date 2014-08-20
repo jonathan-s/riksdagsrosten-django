@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import date
 
 from django.shortcuts import render, redirect, get_object_or_404
