@@ -5,7 +5,7 @@ from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 
-from riksdagen.models import Person, Voting, Document, VotingDistinct, VotingAgg
+from riksdagen.models import Person, Voting, Document, VotingAgg
 from riksdagen.constants import GOVORGAN, PARTY_NAME, PARTY
 
 
