@@ -48,17 +48,26 @@ class PersonalRecord(models.Model):
     def __str__(self):
         return "{0}: {1}".format(self.record_name, self.record)
 
+
 class VotingBase(models.Model):
-    hangar_id = models.IntegerField(db_index=True) # a many to many field ?
     voting_id = models.CharField(max_length=255)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
-    doc_item = models.IntegerField(db_index=True)
+    doc_item = models.IntegerField(db_index=True) #
     vote = models.CharField(max_length=255, db_index=True)
     pertaining = models.CharField(max_length=255)
     voting_part = models.CharField(max_length=255)
-    desk_nr = models.CharField(max_length=255)
     date = models.DateField()
+
+    class Meta:
+        abstract = True
+
+
+class Voting(VotingBase):
+    document = models.ForeignKey('Document', db_column='hangar_id', related_name='doc_votes')
+    fk_voting_person = models.ForeignKey(Person, related_name='votes')
+
+    desk_nr = models.CharField(max_length=255)
     # fields below not used, but included for completeness
     # and because it makes it easy to import data.
     namn = models.CharField(max_length=255)
@@ -71,36 +80,13 @@ class VotingBase(models.Model):
     kon = models.CharField(max_length=255)
     fodd = models.CharField(max_length=255)
 
-    class Meta:
-        abstract = True
-
-class Voting(VotingBase):
-    document = models.ForeignKey(
-        'Document', to_field='hangar_id', db_column='hangar_id', related_name='doc_votes')
-    fk_voting_person = models.ForeignKey(Person, related_name='votes')
-
-    def __str__(self):
-        return "{0}:{1} Röst: {2}".format(
-            self.party_year, self.label, self.vote)
-
-class VotingDistinct(VotingBase):
-    document = models.ForeignKey(
-        'Document', to_field='hangar_id', db_column='hangar_id', related_name='ddoc_votes')
-    fk_voting_person = models.ForeignKey(Person, related_name='vd_votes')
-
-    class Meta:
-        db_table = 'riksdagen_voting_distinct'
-        managed = False
-
     def __str__(self):
         return "{0}:{1} Röst: {2}".format(
             self.party_year, self.label, self.vote)
 
 class VotingAgg(models.Model):
-    document = models.ForeignKey(
-        'Document', to_field='hangar_id', db_column='hangar_id', related_name='voting_agg')
+    document = models.ForeignKey('Document', db_column='hangar_id', related_name='voting_agg')
     voting_id = models.CharField(max_length=255)
-    hangar_id = models.IntegerField()
     date = models.DateField()
     q1_yes = models.IntegerField()
     q1_no = models.IntegerField()
@@ -109,9 +95,8 @@ class VotingAgg(models.Model):
 
 
 class Document(models.Model):
-    # doc_id should be primary key
+    hangar_id = models.IntegerField(primary_key=True)
     doc_id = models.CharField(max_length=100, db_index=True)
-    hangar_id = models.IntegerField(unique=True, db_index=True)
     party_year = models.CharField(max_length=30)
     label = models.CharField(max_length=100)
     doctype = models.CharField(max_length=100)
