@@ -1,0 +1,16 @@
+[
+{
+    "fields": {
+        "sites": [
+            1
+        ],
+        "provider": "facebook",
+        "key": "",
+        "secret": "894e3faa51dba07488b4f4329800cd38",
+        "client_id": "1547445402151009",
+        "name": "Facebook"
+    },
+    "model": "socialaccount.socialapp",
+    "pk": 1
+}
+]

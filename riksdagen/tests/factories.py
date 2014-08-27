@@ -55,10 +55,10 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Document
 
-    doc_id = 'GY01AU4'
+    doc_id = factory.Sequence(lambda n: 'GY01AU{}'.format(n))
     hangar_id = factory.Sequence(lambda n: 2000+n)
     party_year = '2013/14'
-    label = 'FIU21'
+    label = factory.Sequence(lambda n: 'FIU{}'.format(n))
     doctype = 'bet'
     doctype2 = 'bet'
     subtype = 'bet'
@@ -70,7 +70,7 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     date = datetime.date(2014, 6, 22)
     system_date = datetime.datetime(2014, 6, 22)
     publicised = datetime.datetime(2014, 6, 22)
-    title = 'Random Junk Title'
+    title = factory.sequence(lambda n: 'Random Junk Title {}'.format(n))
     subtitle = ''
     status = ''
     related_id = ''
@@ -90,7 +90,6 @@ class VotingAggFactory(factory.django.DjangoModelFactory):
         model = VotingAgg
 
     document = factory.SubFactory(DocumentFactory)
-    hangar_id = factory.Sequence(lambda n: 1000+n)
     voting_id = 'AAFAC7F5-AFCD-11D8-AE5D-0004755038D1'
     date = datetime.date(2014, 6, 17)
     q1_yes = 0

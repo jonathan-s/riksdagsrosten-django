@@ -6,18 +6,16 @@ from unittest import skip
 from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.core.management import call_command
-from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
 
 from .factories import PersonFactory, PersonWithCommitment
-from .factories import VotingAggFactory, DocumentFactory
-from riksdagen.constants import GOVORGAN
+from .factories import VotingAggFactory
+from riksdagen.constants import GOVORGAN, PARTY_NAME
 from riksdagen.views import party, partywithname, singlemp
 from riksdagen.views import allmp, polls
-from riksdagen.models import Person, Document
+from riksdagen.models import Person, VotingAgg
 
 """
-import factory
 
 import logging
 logger = logging.getLogger('factory')
@@ -28,24 +26,39 @@ logger.setLevel(logging.DEBUG)
 def setUpModule():
     call_command('loaddata', 'riksdagen/tests/init_facebook_app.json', verbosity=0)
 
-@skip("VotingAgg needs its own test fixtures")
 class PollsTest(TestCase):
 
     def setUp(self):
-        with factory.debug():
-            DocumentFactory()
-            VotingAggFactory()
+        VotingAggFactory()
+        self.d = VotingAgg.objects.select_related('document').order_by('-date')
 
     def test_polls_resolves_url_correct(self):
         found = resolve('/votering/tidigare/kategori/')
 
-        d = VotingAgg.objects.select_related('document').filter(
-            doc_item__exact=1,
-            pertaining__exact='sakfrågan').order_by('-date')
-
         self.assertEqual(found.func, polls)
-        self.assertEqual(found.kwargs, {'documents': d, 'govorgan': GOVORGAN})
 
+    def test_polls_has_right_context(self):
+        response = self.client.get('/votering/tidigare/kategori', follow=True)
+
+        self.assertEqual(list(response.context['documents']), list(self.d))
+        self.assertEqual(response.context['govorgan'], GOVORGAN)
+
+class PartyTest(TestCase):
+
+    def test_party_resolves_url_correct(self):
+        found = resolve('/parti/')
+
+        self.assertEqual(found.func, party)
+
+    def test_has_right_number_of_mps(self):
+        PersonWithCommitment.create_batch(10,
+            party='S', commitments__until=date(2014, 9, 29))
+        PersonWithCommitment(party='S', commitments__until=date(2014, 9, 1))
+        PersonWithCommitment(party='S', commitments__role_code='Something else')
+        response = self.client.get('/parti/')
+
+        self.assertEqual(response.context['party_name'], PARTY_NAME)
+        self.assertEqual(response.context['counts']['socialdemokraterna'], 10)
 
 class PartyWithNameTest(TestCase):
 
@@ -106,14 +119,12 @@ class SingleMpTest(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    @skip('make this part of a functional test instead?')
-    def test_singlemp_renders_correctly(self):
+    def test_singlemp_contains_right_mp(self):
         response = self.client.get(
-            '/ledamot/{0}'.format(self.person.intressent_id))
+            '/ledamot/{0}'.format(self.person.intressent_id), follow=True)
 
         mp = get_object_or_404(Person, pk=self.person.intressent_id)
-        html = render_to_string('party-mp.html', {'mp':mp})
-        print(html)
+        self.assertEqual(response.context['mp'], mp)
 
 class AllMpTest(TestCase):
 
@@ -134,8 +145,6 @@ class AllMpTest(TestCase):
         PersonFactory(party='M')
 
         response = self.client.get('/ledamot/')
-        mps = Person.objects.filter(commitments__until=date(2014, 9, 29),
-            commitments__role_code__iexact='Riksdagsledamot')
 
         self.assertEqual(response.context['mps'].count(), 3)
 
