@@ -131,7 +131,7 @@ def votes(value_list, hgid):
     """Takes hangar_id, orders by doc_item, takes the first
         elements doc_item and gets the vote results of that"""
 
-    qs = Voting.objects.filter(hangar_id__exact=hgid,
+    qs = Voting.objects.filter(document_id__exact=hgid,
         pertaining__exact='sakfrågan').order_by('doc_item')
     if qs.exists():
         doc_item = qs[0].doc_item
