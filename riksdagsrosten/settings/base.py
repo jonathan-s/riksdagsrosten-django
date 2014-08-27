@@ -38,6 +38,8 @@ MANAGERS = ADMINS
 
 DATABASES = { 'default': dj_database_url.config()}
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +63,7 @@ THIRD_PARTY = (
 
 LOCAL_APPS = (
     'riksdagen',
+    'userprofile',
     )
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY + DJANGO_APPS

@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^ledamot/$', allmp, name='allmp'),
     url(r'^votering/tidigare/kategori/(?P<category>\w+)/$', polls, name='pollscat'),
     url(r'^votering/tidigare/kategori/$', polls, name='polls'),
+    url(r'^accounts/', include('allauth.urls')),
     # Examples:
     # url(r'^$', 'riksdagsrosten.views.home', name='home'),
     # url(r'^riksdagsrosten/', include('riksdagsrosten.foo.urls')),
@@ -25,3 +26,4 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+
