@@ -19,7 +19,7 @@ def polls(request, category=None):
     d = VotingAgg.objects.select_related('document').order_by('-date')
 
     if category and GOVORGAN.get(category):
-        d = d.filter(govorgan__exact=category)[:20]
+        d = d.filter(document__govorgan__exact=category)[:20]
     elif category:
         return redirect('polls', permanent=True)
     else:
@@ -31,9 +31,9 @@ def party(request):
     counts = {}
     # this is somewhat expensive, find a way to cache this.
     for party in PARTY_NAME.keys():
-        print(party)
         counts['{0}'.format(party)] = Person.objects.filter(
-            party__exact=PARTY_NAME[party], commitments__until=date(2014, 9, 29), commitments__role_code__exact='Riksdagsledamot').count()
+            party__exact=PARTY_NAME[party], commitments__until=date(2014, 9, 29),
+            commitments__role_code__exact='Riksdagsledamot').count()
 
     return render(request, 'party.html', {'counts': counts, 'party_name': PARTY_NAME })
 
