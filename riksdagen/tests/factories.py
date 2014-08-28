@@ -85,7 +85,7 @@ class DocumentFactory(factory.django.DjangoModelFactory):
 
 
 class VotingAggFactory(factory.django.DjangoModelFactory):
-
+    """This should not in fact be needed as I see it"""
     class Meta:
         model = VotingAgg
 
@@ -98,8 +98,34 @@ class VotingAggFactory(factory.django.DjangoModelFactory):
     q1_abstained = 0
 
 
+class VotingFactory(factory.django.DjangoModelFactory):
 
+    class Meta:
+        model = Voting
 
+    desk_nr = 1
+    voting_id = factory.sequence(lambda n: 'AAFAC7F5-AFCD-11D8-AE5D-000475{}D1'.format(1000+n))
+    party_year = factory.SelfAttribute('document.party_year')
+    label = factory.SelfAttribute('document.label')
+    doc_item = 1
+    vote = 'Ja'
+    pertaining = 'sakfrågan'
+    voting_part = 'huvud'
+    date = datetime.date(2014, 1, 1)
+
+    #random facts
+    parti = factory.SelfAttribute('fk_voting_person.party')
+    namn = factory.SelfAttribute('fk_voting_person.sort_name')
+    valkrets = 'random county'
+    valkretsnummer = '1'
+    iort = ''
+    fornamn = factory.SelfAttribute('fk_voting_person.firstname')
+    efternamn = factory.SelfAttribute('fk_voting_person.lastname')
+    kon = factory.SelfAttribute('fk_voting_person.sex')
+    fodd = factory.SelfAttribute('fk_voting_person.born_year')
+
+    document = factory.SubFactory(DocumentFactory)
+    fk_voting_person = factory.SubFactory(PersonFactory)
 
 
 

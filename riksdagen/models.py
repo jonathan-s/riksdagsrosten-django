@@ -50,7 +50,7 @@ class PersonalRecord(models.Model):
 
 
 class VotingBase(models.Model):
-    voting_id = models.CharField(max_length=255)
+    voting_id = models.CharField(max_length=255, db_index=True)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
     doc_item = models.IntegerField(db_index=True) #
@@ -135,7 +135,7 @@ def votes(value_list, hgid):
         pertaining__exact='sakfrågan').order_by('doc_item')
     if qs.exists():
         doc_item = qs[0].doc_item
-        d = {v: qs.filter(vote__exact='{0}'.format(v),
+        d = {v[1]: qs.filter(vote__exact='{0}'.format(v[0]),
                 doc_item=doc_item).count() for v in value_list}
         d['voting_id'] = qs[0].voting_id
         d['date'] = qs[0].date
@@ -153,9 +153,12 @@ def update_or_create(updated_values, hgid):
 @receiver(post_save, sender=Document)
 def update_votes(sender, instance, created, raw, using, update_fields, **kwargs):
     hgid = instance.hangar_id
-    d = votes(
-        ['Ja', 'Nej', 'Frånvarande', 'Avstår'], hgid)
+    d = votes([
+            ('Ja', 'q1_yes'), ('Nej', 'q1_no'),
+            ('Frånvarande', 'q1_absent'),
+            ('Avstår', 'q1_abstained')], hgid)
     if d.get('voting_id'):
+        d['document'] = instance
         update_or_create(d, hgid)
 
 
