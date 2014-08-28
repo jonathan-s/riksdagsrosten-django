@@ -1,33 +1,31 @@
 from datetime import date
+from unittest import skip
 
 from django.test import TestCase
 
-from riksdagen.tests.factories import PersonFactory
-from riksdagen.tests.factories import DocumentFactory
 from .factories import UserProfileFactory
-from userprofile.models import UserVote
+from .factories import UserVoteFactory
 from userprofile.models import UserProfile
+from userprofile.models import UserSimilarity
+from riksdagen.tests.factories import VotingFactory
 
 
-class UserProfileTest(TestCase):
+class UserVoteTest(TestCase):
 
     def setUp(self):
-        self.doc = DocumentFactory()
-        self.person = PersonFactory()
-        self.user = UserProfileFactory(nr_votes=0)
-        self.vote = UserVote.objects.create(user=self.user.user, document=self.doc)
+        self.userprofile = UserProfileFactory(nr_votes=0)
+        self.user = self.userprofile.user
 
-    def test_userprofile_vote_increase_by_one(self):
-        user = UserProfile.get(self.user.id)
+    def test_save_uservote_increase_userprofile_vote(self):
+        UserVoteFactory(user=self.user)
 
-        self.assertEqual(user.nr_votes, 1)
+        profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(profile.nr_votes, 1)
 
-    def test_userprofile_changes_last_voted_on(self):
-        user = UserProfile.get(self.user.id)
+    def test_save_uservote_userprofile_changes_last_voted_on(self):
+        UserVoteFactory(user=self.user)
 
-        self.assertEqual(user.last_voted_on.date(), date.today())
-
-
-
+        profile = UserProfile.objects.get(user=self.user)
+        self.assertEqual(profile.last_voted_on.date(), date.today())
 
 
