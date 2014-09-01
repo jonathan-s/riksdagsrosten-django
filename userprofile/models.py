@@ -47,6 +47,10 @@ class UserSimilarity(models.Model):
     common_votes = models.IntegerField()
     mp = models.ForeignKey(Person, related_name='user_similarity')
 
+    def __str__(self):
+        return "{0} vs {1}: {2}%".format(
+            self.user, self.mp, self.percentage)
+
 def update_or_create(updated_values):
     instance, created = UserSimilarity.objects.get_or_create(**updated_values)
     if created:
@@ -79,8 +83,7 @@ def update_person(sender, instance, created, raw, using, update_fields, **kwargs
                 if mp_vote == 'Ja' or mp_vote == 'Nej':
                     total_votes += 1
             except Voting.DoesNotExist:
-                print('Warning!')
-                pass # skip this vote
+                print('Skipping this vote!')
 
         d = {
             'user': instance.user,
