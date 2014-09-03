@@ -13,9 +13,9 @@ from riksdagen.models import Document
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    last_voted_on = models.DateTimeField()
-    open_profile = models.BooleanField()
-    nr_votes = models.IntegerField()
+    last_voted_on = models.DateTimeField(null=True)
+    open_profile = models.BooleanField(default=False)
+    nr_votes = models.IntegerField(default=0)
 
     def __str__(self):
         return "{0}'s profile".format(self.user.username)
