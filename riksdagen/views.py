@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 
 from riksdagen.models import Person, Voting, Document, VotingAgg
-from riksdagen.constants import GOVORGAN, PARTY_NAME, PARTY
+from riksdagen.constants import GOVORGAN, PARTY_NAME
 
 
 def home(request):
@@ -16,22 +16,30 @@ def polls(request, category=None):
     # do a subquery with distinct through extra. It should work, this is still a rather slow query
     # http://stackoverflow.com/questions/9795660/postgresql-distinct-on-without-ordering
     """d = VotingDistinct.objects.select_related('document').filter(doc_item__exact=1, pertaining__exact='sakfrågan').order_by('-date')"""
-    d = VotingAgg.objects.select_related('document').order_by('-date')
+    agg = VotingAgg.objects.select_related('document').order_by('-date')
 
     if category and GOVORGAN.get(category):
-        d = d.filter(document__govorgan__exact=category)[:20]
+        agg = agg.filter(document__govorgan__exact=category)[:20]
     elif category:
         return redirect('polls', permanent=True)
     else:
-        d = d[:20]
+        agg = agg[:20]
 
-    return render(request, 'polls.html', {'documents': d, 'govorgan': GOVORGAN })
+    return render(request, 'polls.html', {'aggregates': agg, 'govorgan': GOVORGAN })
+
+def poll_detail(request, doc_id):
+
+    votes = Document.objects.select_related(
+        'voting_agg').get(doc_id=doc_id)
+
+    return render(request, 'polldetail.html',
+        {'votes': votes})
 
 def party(request):
     counts = {}
     # this is somewhat expensive, find a way to cache this.
     for party in PARTY_NAME.keys():
-        counts['{0}'.format(party)] = Person.objects.filter(
+        counts[party] = Person.objects.filter(
             party__exact=PARTY_NAME[party], commitments__until=date(2014, 9, 29),
             commitments__role_code__exact='Riksdagsledamot').count()
 
