@@ -59,6 +59,10 @@ class VotingBase(models.Model):
     voting_part = models.CharField(max_length=255)
     date = models.DateField()
 
+    @classmethod
+    def get_field_names(cls):
+        return [field.name for field in cls._meta.fields]
+
     class Meta:
         abstract = True
 
@@ -85,9 +89,11 @@ class Voting(VotingBase):
             self.party_year, self.label, self.vote)
 
 class VotingAgg(models.Model):
-    document = models.ForeignKey('Document', db_column='hangar_id', related_name='voting_agg')
+    document = models.OneToOneField('Document', db_column='hangar_id', related_name='voting_agg')
     voting_id = models.CharField(max_length=255)
     date = models.DateField()
+    u_q1_yes = models.IntegerField(default=0)
+    u_q1_no = models.IntegerField(default=0)
     q1_yes = models.IntegerField()
     q1_no = models.IntegerField()
     q1_absent = models.IntegerField()
