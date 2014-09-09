@@ -1,5 +1,6 @@
 # Ongoing todo list
 
+* one update_or_create function
 * Pagination for polls
 * Mediaqueries
     - Individual view
@@ -13,15 +14,17 @@
     - Friend graph
     - Personalized homepage when logged in. 
     - A friend feed?
+    x increase votes for users
 * Person view
     - Cache pictures on my server
-    - Orm manager for MPs for 2014
+    - Orm manager for MPs for 2014!!
+    x similarity matching!  
 * Polls
     - Create view for looking at poll data in detailed view. 
     - CSS for that. 
     - BUG: The polls might not always have doc_item 1, but have other polls that are done in that issue. How to know which is the first poll?
     - 2795162, 2827413 has many votes. 
-* A model for aggregation of votes, easier to handle.
+x A model for aggregation of votes, easier to handle.
 * Look at utskottsforslag and see if it's possible to regex out yrkande and nummer with the document and then parse that. To include a summary. 
 * Get Celery working for processes with redis, for aggregation of votes for instance. 
 * Caching
