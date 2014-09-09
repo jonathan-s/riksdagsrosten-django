@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load socialaccount %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -18,7 +19,7 @@
 -        <![endif]-->
         <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
-        <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <!--<![endif]-->
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
@@ -44,10 +45,18 @@
                     <nav>
                         <div class="nav smaller-title">
                             <ul>
+                                {% if request.user.is_authenticated %}
+                                <li>Välkommen {{ request.user.username }}</li>
+                                {% endif %}
                                 <li><a href="{% url 'polls' %}">Omröstningar</a></li>
                                 <li><a href="{% url 'party' %}">Ledamöter & Partier</a></li>
                                 <li><a href="#">Blogg</a></li>
-                                <li><a href="#">Logga in</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'userprofile' %}">Min Profil</a></li>
+                                <li><a href="/accounts/logout">Logout</a></li>
+                                {% else %}
+                                <li><a href="javascript:allauth.facebook.login('', 'authenticate', 'login')">Logga in</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </nav>
@@ -66,6 +75,8 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="{% static 'js/plugins.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+        {% providers_media_js %}
+        <script type="text/javascript" src="/static/facebook/js/fbconnect.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
@@ -76,5 +87,6 @@
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
+
     </body>
 </html>

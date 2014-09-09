@@ -11,10 +11,15 @@ STATIC_COMMON = PROJECT_PATH + '/static_common'
 MEDIA_ROOT_PATH = PROJECT_PATH + '/media'
 
 
-def get_env_variable(var_name):
+def get_env_variable(var_name, default=None):
     """Get the environment variable or return exception"""
     try:
-        return os.environ[var_name]
+        if not default:
+            return os.environ[var_name]
+        elif default:
+            return default
+        else:
+            raise KeyError
     except KeyError:
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
@@ -32,11 +37,19 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
     )
 
+# TODO: Need to configure production Broker
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'amqp'
+
 MANAGERS = ADMINS
 
 # using dj_database_url.config() check Kenneth reitz Getting started with django for usage
 
 DATABASES = { 'default': dj_database_url.config()}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DJANGO_APPS = (
     'django.contrib.auth',
@@ -57,10 +70,12 @@ THIRD_PARTY = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'djcelery',
     )
 
 LOCAL_APPS = (
     'riksdagen',
+    'userprofile',
     )
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY + DJANGO_APPS

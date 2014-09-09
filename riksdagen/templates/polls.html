@@ -1,46 +1,51 @@
-{% extends "base.html" %}
-{% load custom_filter %}
-
-{% block content %}
-    <div class="mp-wrapper vote-list">
-        <ul>
-                {% for d in documents %}
-                <li>
-                    <a href="{{ d.document.doc_id }}">
-                        <h1 class="smaller-title">{{ d.document.title }}</h1>
-                        <hr>
-                        <div class="pure-g">
-                            <div class="pure-u-1 pure-u-md-2-3">
-                                <p>Description</p>
-                                <div class="meta">
-                                    <span>Voteringsdag: {{ d.date }}</span><br>
-                                    <span>Doc datum: {{ d.document.date }}<br></span>
-                                    <span>Kategori: {{ govorgan|get_key:d.document.govorgan }}
-                                    </span><br>
-                                    Hangar id: {{ d.hangar_id }}<br>
-                                    Voting id: {{ d.voting_id }}
-                                </div>
+{% extends "base.html" %} {% load custom_filter %} {% block title %}Omröstningar{% endblock title %} {% block content %}
+<div class="mp-wrapper vote-list">
+    <ul>
+        {% for a in aggregates %}
+        <li>
+            <a href="{% url 'poll_detail' doc_id=a.document.doc_id %}">
+                <h1 class="smaller-title">{{ a.document.title }}</h1>
+                <hr>
+                <div class="pure-g">
+                    <div class="pure-u-1 pure-u-md-2-3">
+                        <p>Description</p>
+                        <div class="meta">
+                            <span>Voteringsdag: {{ a.date }}</span>
+                            <br>
+                            <span>Doc datum: {{ a.document.date }}
+                                <br>
+                            </span>
+                            <span>Kategori: {{ govorgan|get_key:a.document.govorgan }}
+                            </span>
+                            <br>Hangar id: {{ a.document.hangar_id }}
+                            <br>Voting id: {{ a.voting_id }}
+                        </div>
+                    </div>
+                    <div class="pure-u-1 pure-u-md-1-3">
+                        <span class="vote-here">Klicka här för att rösta</span>
+                        <span class="above-vote">Folket</span>
+                        <div class="votes">
+                            <div class="yes-bar" style="width: {% widthratio a.u_q1_yes a.u_q1_yes|add:a.u_q1_no 100 %}%">
+                                <span>{{ a.u_q1_yes }} st</span>
                             </div>
-                            <div class="pure-u-1 pure-u-md-1-3">
-                                <span class="vote-here">Klicka här för att rösta</span>
-                                <span>Riksdagen</span>
-                                <div class="votes">
-                                    <div class="yes-bar" style="width:{% widthratio d.q1_yes d.q1_yes|add:d.q1_no 100 %}%">
-                                        <span>{{ d.q1_yes }} st</span>
-                                    </div>
-                                    <div class="no-bar" style="width:{% widthratio d.q1_no d.q1_yes|add:d.q1_no 100 %}%">
-                                        <span>{{ d.q1_no }} st</span>
-                                    </div>
-                                </div>
+                            <div class="no-bar" style="width:{% widthratio a.u_q1_no a.u_q1_yes|add:a.u_q1_no 100 %}%">
+                                <span>{{ a.u_q1_no }} st</span>
+                            </div>
+                            <span class="center">Bli den första att rösta</span>
+                        </div>
+                        <span class="above-vote">Riksdagen</span>
+                        <div class="votes">
+                            <div class="yes-bar" style="width:{% widthratio a.q1_yes a.q1_yes|add:a.q1_no 100 %}%">
+                                <span>{{ a.q1_yes }} st</span>
+                            </div>
+                            <div class="no-bar" style="width:{% widthratio a.q1_no a.q1_yes|add:a.q1_no 100 %}%">
+                                <span>{{ a.q1_no }} st</span>
                             </div>
                         </div>
-                    </a>
-                </li>
-                <!--    <p>{{ d.title }}</p>
-                    <p>Voteringsdag: {{ d.voting_date }}</p>
-                    <p>Kategori: {{ d.govorgan }}</p>
-                    <p>Voting id: {{ d.vote_id }}</p>
-                    <p>Yes: {{ d.yes }}</p>
-                    <hr> -->
-                {% endfor %}</ul></div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {% endfor %}</ul>
+</div>
 {% endblock content %}

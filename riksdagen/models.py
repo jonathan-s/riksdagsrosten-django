@@ -50,7 +50,7 @@ class PersonalRecord(models.Model):
 
 
 class VotingBase(models.Model):
-    voting_id = models.CharField(max_length=255)
+    voting_id = models.CharField(max_length=255, db_index=True)
     party_year = models.CharField(max_length=100)
     label = models.CharField(max_length=100)
     doc_item = models.IntegerField(db_index=True) #
@@ -58,6 +58,10 @@ class VotingBase(models.Model):
     pertaining = models.CharField(max_length=255)
     voting_part = models.CharField(max_length=255)
     date = models.DateField()
+
+    @classmethod
+    def get_field_names(cls):
+        return [field.name for field in cls._meta.fields]
 
     class Meta:
         abstract = True
@@ -85,9 +89,11 @@ class Voting(VotingBase):
             self.party_year, self.label, self.vote)
 
 class VotingAgg(models.Model):
-    document = models.ForeignKey('Document', db_column='hangar_id', related_name='voting_agg')
+    document = models.OneToOneField('Document', db_column='hangar_id', related_name='voting_agg')
     voting_id = models.CharField(max_length=255)
     date = models.DateField()
+    u_q1_yes = models.IntegerField(default=0)
+    u_q1_no = models.IntegerField(default=0)
     q1_yes = models.IntegerField()
     q1_no = models.IntegerField()
     q1_absent = models.IntegerField()
@@ -127,15 +133,15 @@ class Document(models.Model):
         return "{0}:{1} :{2}".format(
             self.party_year, self.label, self.title)
 
-def votes(value_list, hgid):
+def votes(cls, value_list, hgid):
     """Takes hangar_id, orders by doc_item, takes the first
         elements doc_item and gets the vote results of that"""
 
-    qs = Voting.objects.filter(document_id__exact=hgid,
+    qs = cls.objects.filter(document_id__exact=hgid,
         pertaining__exact='sakfrågan').order_by('doc_item')
     if qs.exists():
         doc_item = qs[0].doc_item
-        d = {v: qs.filter(vote__exact='{0}'.format(v),
+        d = {v[1]: qs.filter(vote__exact='{0}'.format(v[0]),
                 doc_item=doc_item).count() for v in value_list}
         d['voting_id'] = qs[0].voting_id
         d['date'] = qs[0].date
@@ -143,19 +149,25 @@ def votes(value_list, hgid):
         d = {}
     return d
 
-def update_or_create(updated_values, hgid):
+def update_or_create_votingagg(updated_values):
     instance, created = VotingAgg.objects.get_or_create(**updated_values)
     if created:
-        pass # no need to do anything
+        return created # no need to do anything
     else:
         VotingAgg.objects.update(**updated_values)
+        return False
 
 @receiver(post_save, sender=Document)
 def update_votes(sender, instance, created, raw, using, update_fields, **kwargs):
     hgid = instance.hangar_id
-    d = votes(
-        ['Ja', 'Nej', 'Frånvarande', 'Avstår'], hgid)
+    d = votes(Voting, [
+            ('Ja', 'q1_yes'), ('Nej', 'q1_no'),
+            ('Frånvarande', 'q1_absent'),
+            ('Avstår', 'q1_abstained')], hgid)
     if d.get('voting_id'):
-        update_or_create(d, hgid)
+        d['document'] = instance
+        update_or_create_votingagg(d)
+
+    # save for loyalty and absence.
 
 

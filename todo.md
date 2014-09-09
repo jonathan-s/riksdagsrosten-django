@@ -1,5 +1,6 @@
 # Ongoing todo list
 
+* one update_or_create function
 * Pagination for polls
 * Mediaqueries
     - Individual view
@@ -13,10 +14,12 @@
     - Friend graph
     - Personalized homepage when logged in. 
     - A friend feed?
+    x increase votes for users
 * Person view
     - Cache pictures on my server
-    - Orm manager for MPs for 2014
     - add party logo next to name.
+    - Orm manager for MPs for 2014!!
+    x similarity matching!  
 * Polls
     - Create view for looking at poll data in detailed view. 
     - CSS for that. 

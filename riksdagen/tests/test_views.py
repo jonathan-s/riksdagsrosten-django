@@ -12,7 +12,7 @@ from .factories import PersonFactory, PersonWithCommitment
 from .factories import VotingAggFactory
 from riksdagen.constants import GOVORGAN, PARTY_NAME
 from riksdagen.views import party, partywithname, singlemp
-from riksdagen.views import allmp, polls
+from riksdagen.views import allmp, polls, poll_detail
 from riksdagen.models import Person, VotingAgg
 
 """
@@ -24,7 +24,7 @@ logger.setLevel(logging.DEBUG)
 """
 
 def setUpModule():
-    call_command('loaddata', 'riksdagen/tests/init_facebook_app.json', verbosity=0)
+    call_command('loaddata', 'riksdagsrosten/init_facebook_app.json', verbosity=0)
 
 class PollsTest(TestCase):
 
@@ -40,8 +40,35 @@ class PollsTest(TestCase):
     def test_polls_has_right_context(self):
         response = self.client.get('/votering/tidigare/kategori', follow=True)
 
-        self.assertEqual(list(response.context['documents']), list(self.d))
+        self.assertEqual(list(response.context['aggregates']), list(self.d))
         self.assertEqual(response.context['govorgan'], GOVORGAN)
+
+class PollDetailTest(TestCase):
+
+    def setUp(self):
+        self.v = VotingAggFactory(
+            document__doc_id='GY01AU1',
+            q1_yes=10,
+            q1_no=290)
+
+    def test_polldetail_resolves_url_correct(self):
+        found = resolve('/votering/{0}/'.format(self.v.document.doc_id))
+
+        self.assertEqual(found.func, poll_detail)
+
+    def test_polldetail_uses_template(self):
+        response = self.client.get('/votering/{}/'.format(self.v.document.doc_id))
+
+        self.assertTemplateUsed(response, 'polldetail.html')
+
+    def test_polldetail_contains_aggregate_context(self):
+        response = self.client.get('/votering/{}/'.format(self.v.document.doc_id))
+
+        self.assertEqual(response.context['votes'], self.v.document)
+
+    def test_name_here(self):
+        pass
+
 
 class PartyTest(TestCase):
 
