@@ -36,6 +36,9 @@ class UserVote(VotingBase):
     importance = models.IntegerField(default=0)
     date_voted = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('user', 'voting_id')
+
     def __str__(self):
         return "{0}:{1} Röst: {2}".format(
             self.party_year, self.label, self.vote)
