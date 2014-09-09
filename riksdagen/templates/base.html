@@ -52,6 +52,7 @@
                                 <li><a href="{% url 'party' %}">Ledamöter & Partier</a></li>
                                 <li><a href="#">Blogg</a></li>
                                 {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'userprofile' %}">Min Profil</a></li>
                                 <li><a href="/accounts/logout">Logout</a></li>
                                 {% else %}
                                 <li><a href="javascript:allauth.facebook.login('', 'authenticate', 'login')">Logga in</a></li>
