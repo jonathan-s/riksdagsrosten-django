@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Rösta på {{ votes.document.title }}{% endblock title %}
+
+{% block content %}
+
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-5">
+            <div class="mp-wrapper text-view">
+                <div class="column text-view">
+                    <h1>{{ votes.title }}</h1>
+                    <p><b>Beslutsdatum</b>: {{ votes.system_date}}</p>
+                    <p>{{ votes.html|truncatewords:200 }}</p>
+                    id {{ votes.voting_agg.voting_id }}
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-2-5">
+            <div class="mp-wrapper vote-view">
+                <div class="column vote-view">
+                    <a href="{% url  'poll_vote' doc_id=votes.doc_id doc_item=1 vote='Ja' %} ">Ja</a>
+                    <a href="{% url 'poll_vote' doc_id=votes.doc_id doc_item=1 vote='Nej' %}">Nej</a>
+                </div>
+                <div class="column vote-view">
+                    Folket
+                    {% if votes.voting_agg.u_q1_yes == 0 %}
+                    <p>Ingen har röstat ännu, bli den första</p>
+                    {% else %}
+                    <div class="votes">
+                        <div class="yes-bar" style="width: {% widthratio votes.voting_agg.u_q1_yes votes.voting_agg.u_q1_yes|add:votes.voting_agg.u_q1_no 100 %}%">
+                            <span>{{ votes.voting_agg.u_q1_yes }} st</span>
+                        </div>
+                        <div class="no-bar" style="width:{% widthratio votes.voting_agg.u_q1_no votes.voting_agg.u_q1_yes|add:votes.voting_agg.u_q1_no 100 %}%">
+                            <span>{{ votes.voting_agg.u_q1_no }} st</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="column vote-view">
+                    Riksdagen
+                    <div class="votes">
+                        <div class="yes-bar" style="width: {% widthratio votes.voting_agg.q1_yes votes.voting_agg.q1_yes|add:votes.voting_agg.q1_no 100 %}%">
+                            <span>{{ votes.voting_agg.q1_yes }} st</span>
+                        </div>
+                        <div class="no-bar" style="width:{% widthratio votes.voting_agg.q1_no votes.voting_agg.q1_yes|add:votes.voting_agg.q1_no 100 %}%">
+                            <span>{{ votes.voting_agg.q1_no }} st</span>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+    </div>
+    <div>aoeaoe</div>
+{% endblock content %}

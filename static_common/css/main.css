@@ -129,6 +129,7 @@ h1 {
 
 .center {
     text-align: center;
+    display: block;
 }
 
 /* Explaination
@@ -247,9 +248,22 @@ a {
     border-radius: 1em;
     padding-top: 0.7em;
     padding-left: 0.7em;
+    padding-bottom: 0.01em; /* Collapsing-margin fix */
     /*padding: 0.5em 0.5em 0.5em 0.5em;*/
+    /* Padding interacts with column */
+}
 
+.mp-wrapper.text-view {
+    padding-top: 0.4em;
+    padding-left: 0.4em;
+    margin-right: 1em;
+}
 
+.mp-wrapper.vote-view {
+    border-radius: 0.5em;
+    padding-top: 1em;
+    padding-left: 1em;
+    margin-right: 1em;
 }
 
 .mp-wrapper ul {
@@ -277,7 +291,21 @@ a {
     padding: .5em;
     /*max-width: about 922px;*/
     margin: 0em 0.7em 0.7em 0em;
-    height: 17.2em;
+    height: 17em; /* This is a problem */
+}
+
+.column.text-view {
+    height: auto;
+    text-align: left;
+    margin: 0em 0.4em 0.4em 0em;
+    padding: 1.5em;
+    padding-top: 1em;
+}
+
+.column.vote-view {
+    height: auto;
+    text-align: left;
+    margin: 0em 1em 1em 0em;
 }
 
 .column img {
@@ -298,7 +326,6 @@ a {
 
 .mp-list p {
     line-height: 4em;
-    margin: 0;
     text-align: center;
     margin-left: -3em;
     display: inline;
@@ -332,10 +359,15 @@ a {
     font-size: 1.1em;
 }
 
+.vote-list .above-vote {
+    display: inline-block;
+    margin-top: 1em;
+}
+
 .votes {
     border-radius: 2em;
     height: 2em;
-    background-color: orange;
+    background-color: #999;
     overflow: hidden;
     border: 1px solid #999; /* fix for tiny space in between */
     box-shadow: 0 0 5px #888;
@@ -352,17 +384,21 @@ a {
     white-space: nowrap;
 }
 
+.votes .yes-bar span {
+    white-space: nowrap;
+}
+
 .vote-list .vote-here {
     display: block;
     text-align: center;
     background-color: #EAE4D9;
-    margin: 0 2em 1em 2em;
+    margin: 0 3em 0em 3em;
     padding: 0.5em;
     border-radius: 0.8em;
     box-shadow: 0px 1px 3px #999;
 }
 
-.vote-list .yes-bar {
+.yes-bar {
     background-color: green;
     height: 2em;
     float: left;
@@ -370,7 +406,7 @@ a {
         linear, left top, left bottom, from(#61C861), to(#2E872E));
 }
 
-.vote-list .no-bar {
+.no-bar {
     background-color: red;
     height: 2em;
     float: right;
