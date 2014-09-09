@@ -11,10 +11,15 @@ STATIC_COMMON = PROJECT_PATH + '/static_common'
 MEDIA_ROOT_PATH = PROJECT_PATH + '/media'
 
 
-def get_env_variable(var_name):
+def get_env_variable(var_name, default=None):
     """Get the environment variable or return exception"""
     try:
-        return os.environ[var_name]
+        if not default:
+            return os.environ[var_name]
+        elif default:
+            return default
+        else:
+            raise KeyError
     except KeyError:
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
