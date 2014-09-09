@@ -133,11 +133,11 @@ class Document(models.Model):
         return "{0}:{1} :{2}".format(
             self.party_year, self.label, self.title)
 
-def votes(value_list, hgid):
+def votes(cls, value_list, hgid):
     """Takes hangar_id, orders by doc_item, takes the first
         elements doc_item and gets the vote results of that"""
 
-    qs = Voting.objects.filter(document_id__exact=hgid,
+    qs = cls.objects.filter(document_id__exact=hgid,
         pertaining__exact='sakfrågan').order_by('doc_item')
     if qs.exists():
         doc_item = qs[0].doc_item
@@ -149,22 +149,25 @@ def votes(value_list, hgid):
         d = {}
     return d
 
-def update_or_create(updated_values, hgid):
+def update_or_create_votingagg(updated_values):
     instance, created = VotingAgg.objects.get_or_create(**updated_values)
     if created:
-        pass # no need to do anything
+        return created # no need to do anything
     else:
         VotingAgg.objects.update(**updated_values)
+        return False
 
 @receiver(post_save, sender=Document)
 def update_votes(sender, instance, created, raw, using, update_fields, **kwargs):
     hgid = instance.hangar_id
-    d = votes([
+    d = votes(Voting, [
             ('Ja', 'q1_yes'), ('Nej', 'q1_no'),
             ('Frånvarande', 'q1_absent'),
             ('Avstår', 'q1_abstained')], hgid)
     if d.get('voting_id'):
         d['document'] = instance
-        update_or_create(d, hgid)
+        update_or_create_votingagg(d)
+
+    # save for loyalty and absence.
 
 
