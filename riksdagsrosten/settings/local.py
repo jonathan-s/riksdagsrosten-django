@@ -10,6 +10,9 @@ TEMPLATE_DEBUG = DEBUG
 # port
 # name of database connection riksdagsrosten
 
+BROKER_URL = "amqp://jonathan:password@localhost:5672/myvhost"
+CELERY_ALWAYS_EAGER = True
+
 DATABASES = { 'default': dj_database_url.config(
         default="postgres://jonathan@localhost:5432/riksdagsrosten")}
 

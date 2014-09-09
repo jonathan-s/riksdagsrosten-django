@@ -32,6 +32,12 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
     )
 
+# TODO: Need to configure production Broker
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'amqp'
+
 MANAGERS = ADMINS
 
 # using dj_database_url.config() check Kenneth reitz Getting started with django for usage
@@ -59,6 +65,7 @@ THIRD_PARTY = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'djcelery',
     )
 
 LOCAL_APPS = (

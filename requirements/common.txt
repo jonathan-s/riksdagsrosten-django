@@ -6,3 +6,4 @@ django-allauth
 # Crucial apps requirements
 South
 Pillow
+django-celery
