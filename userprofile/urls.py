@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from django.conf.urls import patterns, include, url
 
 from userprofile.views import userprofile
@@ -10,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^profil/$', userprofile, name='userprofile'),
     url(r'^profil/installningar/$', user_settings, name='usersettings'),
     url(r'^anvandare/(?P<username>\w+)/$', openprofile, name='openprofile'),
-    url(r'^votering/(?P<doc_id>[A-Za-z0-9]+)/(?P<doc_item>\d+)/(?P<vote>Ja|Nej)/$',
+    url(r'^votering/(?P<doc_id>[A-Öa-ö0-9]+)/(?P<doc_item>\d+)/(?P<vote>Ja|Nej)/$',
         poll_detail_vote, name='poll_vote'),
 
 )
