@@ -177,3 +177,6 @@ class PollDetailVoteTest(TestCase):
     def test_voteview_possible_to_change_vote(self):
         pass
 
+    def test_voteview_does_not_increase_when_changing_vote(self):
+        pass
+
