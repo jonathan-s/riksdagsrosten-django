@@ -1,7 +1,9 @@
 import datetime
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 from allauth.account.models import EmailAddress
 
 from riksdagen.models import VotingBase
@@ -24,8 +26,6 @@ class UserProfile(models.Model):
             if len(result):
                 return result[0].verified
         return False
-
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 class UserVote(VotingBase):
     # is it better to tie uservotes to the user or the userprofile?
@@ -51,3 +51,9 @@ class UserSimilarity(models.Model):
     def __str__(self):
         return "{0} vs {1}: {2}%".format(
             self.user, self.mp, self.percentage)
+
+@receiver(post_save, sender=User)
+def create_userprofile_when_new_user(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+

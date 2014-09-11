@@ -2,6 +2,7 @@ from datetime import date
 from unittest import skip
 
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from .factories import UserProfileFactory
 from .factories import UserVoteFactory
@@ -110,4 +111,13 @@ class UserVoteTest(TestCase):
         self.assertEqual(mp1_similarity.percentage, 100)
         self.assertEqual(mp2_similarity.percentage, 0)
         self.assertEqual(mp2_similarity.common_votes, 1)
+
+class UserProfileTest(TestCase):
+
+    def test_userprofile_gets_created_automatically_with_newuser(self):
+        u = User.objects.create_user(username='joe', password='pass')
+
+        profile = UserProfile.objects.get(user=u)
+
+        self.assertEqual(profile.user, u)
 
