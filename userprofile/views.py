@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.http import Http404
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
@@ -73,4 +74,7 @@ def poll_detail_vote(request, doc_id, doc_item, vote):
 def user_settings(request):
     pass
 
-# Create your views here.
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')
