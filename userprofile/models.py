@@ -48,6 +48,13 @@ class UserSimilarity(models.Model):
     common_votes = models.IntegerField()
     mp = models.ForeignKey(Person, related_name='user_similarity')
 
+    # TODO
+    # add party + party_percentage
+    # fill in that information automatically
+    # TODO
+    # Make user and mp unique. Test for that in model.
+
+
     def __str__(self):
         return "{0} vs {1}: {2}%".format(
             self.user, self.mp, self.percentage)

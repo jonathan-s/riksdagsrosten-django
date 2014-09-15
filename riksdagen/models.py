@@ -168,6 +168,10 @@ def update_votes(sender, instance, created, raw, using, update_fields, **kwargs)
         d['document'] = instance
         update_or_create_votingagg(d)
 
+    # TODO
+    # save summary in it's own field. Parse with lxml.
+    # only when a document is created. Which should be a task.
+
     # save for loyalty and absence.
 
 

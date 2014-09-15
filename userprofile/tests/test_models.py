@@ -121,3 +121,7 @@ class UserProfileTest(TestCase):
 
         self.assertEqual(profile.user, u)
 
+class UserSimilarityTest(TestCase):
+    # TODO
+    def test_user_and_mp_is_unique(self):
+        pass
