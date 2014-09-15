@@ -1,3 +1,49 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Din profil{% endblock title %} {% block content %}
+<div class="mp-wrapper profile-view">
+    <div class="column profile-view">
+        <div class="profile-inner clearfix">
+            <img src="https://graph.facebook.com/{{ fb_id }}/picture" alt="{{ user.first_name }} {{ user.last_name }}" class="left" width="50px" height="50px">
+            <h1 class="left">{{ user.first_name }} {{ user.last_name }}</h1>
+            <span class="left">({{ user.profile.nr_votes }} röster)</span>
+            <span class="right"><a href="{% url 'usersettings' %}">Inställningar</a>
+                <a href="{% url 'logout' %}">Logga ut</a></span>
+        </div>
+    </div>
+</div>
 
-{% block title %}Din profil{% endblock title %}
+<div class="pure-g">
+    <div class="pure-u-md-1-2">
+        <div class="mp-wrapper profile first">
+            <ol>
+                <li>
+                    <div class="column mp-list">
+                        <div class="left"><img src="http://data.riksdagen.se/filarkiv/bilder/ledamot/0132698667318_80.jpg" alt=""><img class="logo-corner" src="/static/img/SD.png" alt="">
+                        </div>
+                        <p>Temp</p>
+                        <div class="vote-stat right">
+                            <span>0 röster</span><br>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+        </div>
+    </div>
+    <div class="pure-u-md-1-2">
+        <div class="mp-wrapper profile last">
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="vote-title">Title</span>
+                        <span class="answer ja">Ja</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
