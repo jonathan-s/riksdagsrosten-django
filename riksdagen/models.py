@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from datetime import date
+from io import StringIO
 
 from django.db.models.signals import post_save
 from django.db import models
 from django.dispatch import receiver
-
+from lxml import etree
 
 """All the mappings can be found in rename.py in data"""
 
@@ -127,11 +128,25 @@ class Document(models.Model):
     document_url_html = models.CharField(max_length=255)
     documentstatus_url_xml = models.CharField(max_length=255)
     committee_prop_url_xml = models.CharField(max_length=255)
+    summary = models.TextField(null=True)
     html = models.TextField()
 
     def __str__(self):
         return "{0}:{1} :{2}".format(
             self.party_year, self.label, self.title)
+
+    def save(self, *args, **kwargs):
+        parser = etree.HTMLParser()
+        tree = etree.parse(StringIO(self.html), parser)
+        a = tree.xpath('//a')[0]
+        a_count = 0
+        for sibling in a.itersiblings():
+            if a_count > 1:
+                break
+            elif sibling.tag == 'a':
+                a_count += 1
+            self.summary += bytes.decode(etree.tostring(sibling, method='html'))
+        super().save(*args, **kwargs)
 
 def votes(cls, value_list, hgid):
     """Takes hangar_id, orders by doc_item, takes the first
@@ -167,10 +182,6 @@ def update_votes(sender, instance, created, raw, using, update_fields, **kwargs)
     if d.get('voting_id'):
         d['document'] = instance
         update_or_create_votingagg(d)
-
-    # TODO
-    # save summary in it's own field. Parse with lxml.
-    # only when a document is created. Which should be a task.
 
     # save for loyalty and absence.
 

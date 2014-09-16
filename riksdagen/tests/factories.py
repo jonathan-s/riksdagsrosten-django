@@ -81,7 +81,11 @@ class DocumentFactory(factory.django.DjangoModelFactory):
     document_url_html = 'Lots of html'
     documentstatus_url_xml = 'http://data.riksdagen.se/dokumentstatus/GY01AU4'
     committee_prop_url_xml = 'http://data.riksdagen.se/utskottsforslag/GY01AU4'
-    html = 'Again lots of html'
+    html = """<html><body>
+            <a href=""></a><p></p><p></p><p></p>
+            <a href=""></a><p></p><p></p><p></p>
+            <a href=""></a><p></p><p></p><p></p></body></html>"""
+    summary = ''
 
 
 class VotingAggFactory(factory.django.DjangoModelFactory):

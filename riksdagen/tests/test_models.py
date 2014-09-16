@@ -26,3 +26,14 @@ class VotingAggTest(TestCase):
         self.assertEqual(agg.q1_yes, 50)
         self.assertEqual(agg.q1_no, 25)
 
+class DocumentTest(TestCase):
+
+    def test_document_saves_a_html_summary(self):
+        do = DocumentFactory(html="""<html><body>
+            <a href=""></a><p></p><p></p><p></p>
+            <a href=""></a><p></p><p></p><p></p>
+            <a href=""></a><p></p><p></p><p></p></body></html>""")
+        ptags = """<p></p><p></p><p></p>
+            <a href=""></a><p></p><p></p><p></p>
+            <a href=""></a>"""
+        self.assertEqual(do.summary, ptags)
