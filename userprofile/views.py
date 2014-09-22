@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.http import Http404
+from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -12,32 +13,43 @@ from riksdagen.models import VotingAgg
 from .models import UserVote
 from .models import UserSimilarity
 from .models import UserProfile
+from .forms import UserProfileForm
 from userprofile.tasks import similarity_cycle_mps
 from userprofile.tasks import update_user_vote_stats
 
 @login_required
 def userprofile(request):
-    votes = UserVote.objects.filter(user__pk=request.user.pk)[:5]
-    similarity = UserSimilarity.objects.filter(user__pk=request.user.pk)[:5]
-
-    return render(request, 'userprofile.html', {
-        'votes': votes, 'similarity': similarity
-        })
-
-def openprofile(request, username):
-    """This could probably be mashed together with userprofile"""
-    userprofile = get_object_or_404(UserProfile, user__username=username)
-    if userprofile.open_profile == False:
-        raise Http404
-
-    votes = UserVote.objects.filter(user__username=username)[:5]
-    similarity = UserSimilarity.objects.filter(user__username=username)[:5]
-
+    user = User.objects.select_related(
+        'votes', 'socialaccount_set', 'profile', 'similarity').get(pk=request.user.pk)
+    votes = user.votes.all()[:5]
+    similarity = user.similarity.all()[:5]
+    fb_id = user.socialaccount_set.get().uid
 
     return render(request, 'userprofile.html', {
         'votes': votes,
         'similarity': similarity,
-        'userprofile': userprofile
+        'user': user,
+        'fb_id': fb_id
+        })
+
+def openprofile(request, username):
+    """This could probably be mashed together with userprofile"""
+    user = get_object_or_404(
+        User.objects.select_related(
+            'votes', 'socialaccount_set', 'profile', 'similarity'),
+        username=username)
+    if user.profile.open_profile == False:
+        raise Http404
+
+    votes = user.votes.all()[:5]
+    similarity = user.similarity.all()[:5]
+    fb_id = user.socialaccount_set.get().uid
+
+    return render(request, 'userprofile.html', {
+        'votes': votes,
+        'similarity': similarity,
+        'user': user,
+        'fb_id': fb_id
         })
 
 def add_vote_votingagg(vote, voting_id):
