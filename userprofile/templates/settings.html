@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load filtertags %}
+
+{% block title %}Inställningar{% endblock title %}
+
+{% block content %}
+<div class="mp-wrapper profile-view">
+    <div class="column profile-view">
+        <div class="profile-inner clearfix">
+            <img src="https://graph.facebook.com/{{ fb_id }}/picture" alt="{{ user.first_name }} {{ user.last_name }}" class="left" width="50px" height="50px">
+            <h1 class="left">{{ user.first_name }} {{ user.last_name }}</h1>
+            <span class="left">({{ user.profile.nr_votes }} röster)</span>
+            <span class="right"><a href="{% url 'userprofile' %}">Din Profil</a>
+                <a href="{% url 'logout' %}">Logga ut</a></span>
+        </div>
+    </div>
+</div>
+
+<div class="mp-wrapper">
+    <div class="column profile-view">
+        <form class="pure-form pure-form-aligned" action="{% url 'usersettings' %}" method="POST">
+        <fieldset>
+        {% for field in form.visible_fields %}
+            {% csrf_token %}
+            <div class="pure-control-group">
+                <label for="name"> {{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        {% for field in form.hidden_fields %}
+            {{ field }}
+        {% endfor %}
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock content %}
