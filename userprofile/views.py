@@ -84,7 +84,28 @@ def poll_detail_vote(request, doc_id, doc_item, vote):
         raise PermissionDenied
 
 def user_settings(request):
-    pass
+    user = User.objects.select_related(
+        'votes', 'socialaccount_set', 'profile', 'similarity').get(pk=request.user.pk)
+    fb_id = user.socialaccount_set.get().uid
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user.profile)
+
+        if form.is_valid():
+            print('success')
+            print(user.profile.open_profile)
+            form.save(commit=True)
+            print(user.profile.open_profile)
+            return redirect('usersettings')
+        else:
+            print(form.errors)
+
+    else:
+        form = UserProfileForm(instance=user.profile)
+    return render(request, 'settings.html', {
+        'user': user,
+        'form': form,
+        'fb_id': fb_id})
 
 
 def user_logout(request):
