@@ -171,11 +171,13 @@ def votes(cls, value_list, hgid):
     return d
 
 def update_or_create_votingagg(updated_values):
-    instance, created = VotingAgg.objects.get_or_create(**updated_values)
+    instance, created = VotingAgg.objects.get_or_create(
+                voting_id=updated_values['voting_id'])
     if created:
         return created # no need to do anything
     else:
-        VotingAgg.objects.update(**updated_values)
+        VotingAgg.objects.filter(
+                voting_id=instance.voting_id).update(**updated_values)
         return False
 
 @receiver(post_save, sender=Document)
