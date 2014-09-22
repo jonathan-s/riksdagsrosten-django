@@ -136,16 +136,22 @@ class Document(models.Model):
             self.party_year, self.label, self.title)
 
     def save(self, *args, **kwargs):
+        """Saves summary every time, if you want to make
+        handwritten summary, make it a post_save if created"""
+
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(self.html), parser)
         a = tree.xpath('//a')[0]
         a_count = 0
+        summary = ''
         for sibling in a.itersiblings():
             if a_count > 1:
                 break
             elif sibling.tag == 'a':
                 a_count += 1
-            self.summary += bytes.decode(etree.tostring(sibling, method='html'))
+            elif sibling.tag != 'a':
+                summary += bytes.decode(etree.tostring(sibling, method='html'))
+        self.summary = summary
         super().save(*args, **kwargs)
 
 def votes(cls, value_list, hgid):
