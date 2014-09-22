@@ -10,8 +10,8 @@
                 <div class="column text-view">
                     <h1>{{ votes.title }}</h1>
                     <p><b>Beslutsdatum</b>: {{ votes.system_date}}</p>
-                    <p>{{ votes.html|truncatewords:200 }}</p>
-                    id {{ votes.voting_agg.voting_id }}
+                    <p>{{ votes.summary|safe }}</p>
+                    <a class="right" href="http://data.riksdagen.se/dokument/{{ votes.doc_id }}/">Läs förslaget i sin helhet</a>
                 </div>
             </div>
         </div>
@@ -49,5 +49,4 @@
                 </div>
             </div></div>
     </div>
-    <div>aoeaoe</div>
 {% endblock content %}
