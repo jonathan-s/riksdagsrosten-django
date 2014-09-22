@@ -103,6 +103,10 @@ textarea {
   src: url('../fonts/OpenSans-Regular.ttf')  format('truetype');
 }
 
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('../fonts/JosefinSans-Regular.ttf')  format('truetype');
+}
 
 body {
     font-family: Arial;
