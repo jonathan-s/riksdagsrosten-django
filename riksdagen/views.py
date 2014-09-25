@@ -7,6 +7,7 @@ from django.http import Http404
 
 from riksdagen.models import Person, Voting, Document, VotingAgg
 from riksdagen.constants import GOVORGAN, PARTY_NAME
+from userprofile.models import UserSimilarity
 
 
 def home(request):
@@ -65,6 +66,7 @@ def singlemp(request, mp_id, nameslug=None):
     if nameslug == None or nameslug != correct_slug:
         return redirect('singlemp', mp_id=mp_id, nameslug=correct_slug, permanent=True)
 
+    ######### Absence ########
     vote = Voting.objects.filter(
         fk_voting_person__intressent_id__exact=mp_id) #qs
     absent = vote.filter(vote__exact='Frånvarande').count()
@@ -73,12 +75,24 @@ def singlemp(request, mp_id, nameslug=None):
         presence = round((1 - (absent/total_votes)) * 100, 1)
     else:
         presence = 0
+    ##########################
+
+    ####### Similarity #######
+    if request.user.is_authenticated():
+        try:
+            similarity = UserSimilarity.objects.get(
+                user=request.user, mp=mp)
+        except UserSimilarity.DoesNotExist:
+            similarity = None
+    else:
+        similarity = None
+    ###########################
 
     d = Document.objects.extra(select={'vote': 'riksdagen_voting.vote', 'person': 'riksdagen_voting.namn'},tables=['riksdagen_voting', 'riksdagen_person'],where=['riksdagen_voting.hangar_id=riksdagen_document.hangar_id',"riksdagen_person.intressent_id=riksdagen_voting.fk_voting_person_id", "riksdagen_person.intressent_id='{0}'".format(mp_id),"riksdagen_voting.doc_item=1"]).distinct('doc_id')[:5]
 
     return render(request, 'mp.html',
         {'mp': mp, 'absent': absent, 'total_votes': total_votes,
-        'presence': presence, 'documents': d})
+        'presence': presence, 'documents': d, 'similarity': similarity })
 
 def allmp(request):
     mps = Person.objects.filter(commitments__until=date(2014, 9, 29),
