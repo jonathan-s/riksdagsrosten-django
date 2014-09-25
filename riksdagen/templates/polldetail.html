@@ -23,7 +23,7 @@
                 </div>
                 <div class="column vote-view">
                     Folket
-                    {% if votes.voting_agg.u_q1_yes == 0 %}
+                    {% if votes.voting_agg.u_q1_yes == 0 and votes.voting_agg.u_q1_no == 0 %}
                     <p>Ingen har röstat ännu, bli den första</p>
                     {% else %}
                     <div class="votes">
