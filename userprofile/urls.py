@@ -14,8 +14,6 @@ urlpatterns = patterns('',
     url(r'^profil/logout/$', user_logout, name='logout'),
     url(r'^profil/installningar/$', user_settings, name='usersettings'),
     url(r'^anvandare/(?P<username>\w+)/$', openprofile, name='openprofile'),
-    url(r'^votering/(?P<doc_id>[A-Öa-ö0-9]+)/(?P<doc_item>\d+)/(?P<vote>Ja|Nej)/$',
+    url(r'^votering/(?P<doc_id>[A-Öa-ö0-9]+)/(?P<doc_item>\d+)/(?P<uservote>Ja|Nej)/$',
         poll_detail_vote, name='poll_vote'),
-
-
 )

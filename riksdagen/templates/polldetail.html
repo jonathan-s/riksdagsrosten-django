@@ -18,8 +18,8 @@
         <div class="pure-u-1 pure-u-md-2-5">
             <div class="mp-wrapper vote-view">
                 <div class="column vote-view">
-                    <a href="{% url  'poll_vote' doc_id=votes.doc_id doc_item=1 vote='Ja' %} ">Ja</a>
-                    <a href="{% url 'poll_vote' doc_id=votes.doc_id doc_item=1 vote='Nej' %}">Nej</a>
+                    <a href="{% url  'poll_vote' doc_id=votes.doc_id doc_item=1 uservote='Ja' %} ">Ja</a>
+                    <a href="{% url 'poll_vote' doc_id=votes.doc_id doc_item=1 uservote='Nej' %}">Nej</a>
                 </div>
                 <div class="column vote-view">
                     Folket
