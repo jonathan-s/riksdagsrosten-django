@@ -12,6 +12,7 @@ from .models import UserSimilarity
 from riksdagsrosten.celery import app
 
 def update_or_create(updated_values):
+    # TODO replace this update or create, look in userprofile/views.py
     instance, created = UserSimilarity.objects.get_or_create(**updated_values)
     if created:
         return created

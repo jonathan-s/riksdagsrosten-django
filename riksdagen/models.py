@@ -171,6 +171,7 @@ def votes(cls, value_list, hgid):
     return d
 
 def update_or_create_votingagg(updated_values):
+    # TODO replace this update or create, look in userprofile/views.py
     instance, created = VotingAgg.objects.get_or_create(
                 voting_id=updated_values['voting_id'])
     if created:
