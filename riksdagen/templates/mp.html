@@ -11,16 +11,30 @@
                     <div class="column column-first">
                         <img src="http://data.riksdagen.se/filarkiv/bilder/ledamot/{{ mp.intressent_id }}_192.jpg" alt="{{ mp.firstname }} {{ mp.lastname }}">
                     </div></div>
+                {% if similarity %}
+                <div class="pure-u-1-2 pure-u-md-1-4">
+                {% else %}
                 <div class="pure-u-1-2 pure-u-md-1-4 inactive">
+                {% endif %}
                     <div class="column">
                         <h2 class="box-title">Likhet</h2>
-                        <h3 class="percentage">?</h3>
+                        {% if request.user.is_authenticated %}
+                            {% if similarity %}
+                                <h3 class="percentage">{{ similarity.percentage }}</h3>
+                                <span class="description">Baserat på de {{ similarity.common_votes }} omröstningar ni båda har röstat i har ni svarat likadant på {{ similarity.percentage }}% av dem.</span>
+                            {% else %}
+                                <h3 class="percentage">?</h3>
+                                <span class="description">Du måste lägga en röst innan du kan se likheten mellan dig och {{ mp.firstname }} {{ mp.lastname }}</span>
+                            {% endif %}
+                        {% else %}
+                            <h3 class="percentage">?</h3>
+                        {% endif %}
                     </div></div>
                 <div class="pure-u-1-2 pure-u-md-1-4">
                     <div class="column">
                         <h2 class="box-title">Partilojalitet</h2>
                         <h3 class="percentage">0%</h3>
-                        <span class="description">{{ mp.firstname }} har frångått partilinjen vid 0 av {{ total_votes }} omröstningar sedan förra valet.</span>
+                        <span class="description">{{ mp.firstname }} har frångått partilinjen vid 0 av {{ total_votes }} omröstningar.</span>
                     </div></div>
                 <div class="pure-u-1-2 pure-u-md-1-4">
                     <div class="column">
@@ -35,7 +49,7 @@
         <div class="mp-wrapper">
             <ul>
                 {% for d in documents %}
-                    <li><a href="{{ d.doc_id }}"><span class="vote-title">{{ d.title }} {{ d.person　}}</span><span class="answer {{ d.vote|lower}}">{{ d.vote }}</span></a></li>
+                    <li><a href="{% url 'poll_detail' d.doc_id %}"><span class="vote-title">{{ d.title }}</span><span class="answer {{ d.vote|lower}}">{{ d.vote }}</span></a></li>
                 {% endfor %}
             </ul>
         </div>
