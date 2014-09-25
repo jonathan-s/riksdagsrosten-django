@@ -30,6 +30,26 @@ def update_user_vote_stats(user_pk):
 
 @app.task
 def similarity_calculate_votes(mp_pk, user_pk):
+
+    """
+    alternative way
+    # you need order_by as well.
+    votes_packet = UserVote.objects.filter(user__pk=user_pk).values('voting_id', 'vote')
+    voting_ids = (d['voting_id'] for d in votes)
+    user_votes = (d['vote'] for d in votes)
+    mp_votes = Voting.objects.filter(fk_voting_person__pk=mp_pk,
+                voting_id__in=voting_ids).values_list('vote', flat=True)
+
+    mp_user_vote = zip(user_votes, mp_votes)
+    similar_votes = ((user, mp) for user, mp in mp_user_vote if user==mp)
+    votesum = sum(1 for x in similar_votes) # length of iterable
+    total_votes = sum(1 for vote in user_votes
+                if vote == 'Ja' or vote == 'Nej')
+    # try block here.
+    percentage = votesum/total_votes
+
+    """
+
     user = User.objects.get(pk=user_pk)
     votes = UserVote.objects.filter(user=user)
     mp = Person.objects.select_related('votes').get(pk=mp_pk)
