@@ -21,6 +21,7 @@ class Person(models.Model):
     party = models.CharField(max_length=30)
     constituency = models.CharField(max_length=60)
     status = models.CharField(max_length=60)
+    disloyal_nr = models.IntegerField(default=0)
 
     def __str__(self):
         return "{0} {1} ({2})".format(self.firstname, self.lastname, self.party)
