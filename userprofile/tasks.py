@@ -56,7 +56,7 @@ def similarity_calculate_votes(mp_pk, user_pk):
     d = {}
     vote_sum = 0
     total_votes = 0
-    # TODO: This could be made into two chords.
+    # TODO: This could possibly be made into two chords.
     for v in votes:
         try:
             mp_vote = mp.votes.get(voting_id=v.voting_id).vote
@@ -82,7 +82,7 @@ def similarity_calculate_votes(mp_pk, user_pk):
 @app.task
 def similarity_cycle_mps(user_pk):
     user = User.objects.get(pk=user_pk)
-    mps = mps = Person.objects.filter(
+    mps = Person.objects.filter(
             commitments__until=datetime.date(2014, 9, 29),
             commitments__role_code__exact='Riksdagsledamot')
 
