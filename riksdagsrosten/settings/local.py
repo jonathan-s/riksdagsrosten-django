@@ -18,7 +18,7 @@ DATABASES = { 'default': dj_database_url.config(
 
 ALLOWED_HOSTS = ['*']
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'riksdagsrosten.test_runner.CeleryTestWithNoseRunner'
 
 NOSE_ARGS = ['--nologcapture']
 
