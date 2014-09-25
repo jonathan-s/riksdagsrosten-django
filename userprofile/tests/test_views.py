@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.core.management import call_command
 from django.contrib.auth.models import User
+from django.test.utils import override_settings
 
 from .factories import UserProfileFactory
 from .factories import UserVoteFactory
@@ -19,6 +20,7 @@ from userprofile.models import UserVote
 from userprofile.models import UserSimilarity
 from userprofile.models import UserProfile
 from riksdagen.models import Voting
+from riksdagen.models import VotingAgg
 
 def setUpModule():
     call_command('loaddata', 'riksdagsrosten/init_facebook_app.json', verbosity=0)
@@ -118,13 +120,18 @@ class OpenprofileTest(TestCase):
         self.assertEqual(response.context['userprofile'].nr_votes, 6)
 
 class PollDetailVoteTest(TestCase):
+
     def setUp(self):
         self.v = VotingAggFactory(
             document__doc_id='GY01AU1',
             q1_yes=10,
             q1_no=290)
 
-        VotingFactory(document=self.v.document, doc_item=1)
+        VotingFactory(
+            document=self.v.document,
+            doc_item=1,
+            voting_id=self.v.voting_id)
+
 
         self.user = User.objects.create_user(username='joe', password='pass')
 
@@ -134,7 +141,7 @@ class PollDetailVoteTest(TestCase):
         self.assertEqual(found.func, poll_detail_vote)
 
     def test_voteview_needs_logged_in_user(self):
-        response = self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id))
+        response = self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id), follow=True)
 
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
@@ -171,12 +178,38 @@ class PollDetailVoteTest(TestCase):
         votes = UserVote.objects.filter(user=self.user)
         self.assertEqual(votes.count(), 1)
 
-    def test_voteview_also_updates_votingagg(self):
-        pass
-
     def test_voteview_possible_to_change_vote(self):
+        self.client.login(username='joe', password='pass')
+        self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id))
+        self.client.get('/votering/{}/1/Nej/'.format(self.v.document.doc_id))
+
+        vote = UserVote.objects.filter(user=self.user)
+
+        self.assertEqual(vote.count(), 1)
+        self.assertEqual(vote[0].vote, 'Nej')
+
+    def test_votingagg_does_not_increase_when_changing_vote(self):
+        self.client.login(username='joe', password='pass')
+        self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id))
+        self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id))
+
+        vote = UserVote.objects.filter(user=self.user)[0]
+        aggregate = VotingAgg.objects.get(voting_id=vote.voting_id)
+
+        self.assertEqual(aggregate.u_q1_yes, 1)
+
+    def test_votingagg_possible_to_change_vote(self):
+        self.client.login(username='joe', password='pass')
+        self.client.get('/votering/{}/1/Ja/'.format(self.v.document.doc_id))
+        self.client.get('/votering/{}/1/Nej/'.format(self.v.document.doc_id))
+
+        vote = UserVote.objects.filter(user=self.user)[0]
+        aggregate = VotingAgg.objects.get(voting_id=vote.voting_id)
+
+        self.assertEqual(aggregate.u_q1_yes, 0)
+        self.assertEqual(aggregate.u_q1_no, 1)
+
+    def test_voteview_redirects_if_faulty_doc_id_or_doc_item(self):
         pass
 
-    def test_voteview_does_not_increase_when_changing_vote(self):
-        pass
 
