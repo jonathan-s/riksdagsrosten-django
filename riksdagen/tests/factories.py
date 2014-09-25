@@ -89,13 +89,15 @@ class DocumentFactory(factory.django.DjangoModelFactory):
 
 
 class VotingAggFactory(factory.django.DjangoModelFactory):
-    """This should not in fact be needed as I see it"""
+
     class Meta:
         model = VotingAgg
 
     document = factory.SubFactory(DocumentFactory)
-    voting_id = 'AAFAC7F5-AFCD-11D8-AE5D-0004755038D1'
+    voting_id = factory.sequence(lambda n: 'AAFAC7F5-AFCD-11D8-AE5D-000475{}D1'.format(1000+n))
     date = datetime.date(2014, 6, 17)
+    u_q1_yes = 0
+    u_q1_no = 0
     q1_yes = 0
     q1_no = 0
     q1_absent = 0
